@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "564004941426",
+    "firebase_url": "https://smak-e8610-default-rtdb.firebaseio.com",
+    "project_id": "smak-e8610",
+    "storage_bucket": "smak-e8610.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564004941426:android:8b6e127095d1a0b4235ceb",
+        "android_client_info": {
+          "package_name": "com.example.smak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "564004941426-ep1spd3spg751ics429rj9lb51qrjpll.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smak",
+            "certificate_hash": "3544579fdee886d2fab7417852a525844d9ea7da"
+          }
+        },
+        {
+          "client_id": "564004941426-cjt0enkqbbl17755aou3ke7fv1qba1qm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkPqsCbKZ8AHwkG3JNN66lkMPubbV-uzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "564004941426-cjt0enkqbbl17755aou3ke7fv1qba1qm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/smakFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.example.smak.infrastructure.firebase.LogInFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+        <action
+            android:id="@+id/action_FirstFragment_to_smakFragment2"
+            app:destination="@id/smakFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.example.smak.infrastructure.firebase.SecondFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second">
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/smakFragment"
+        android:name="com.example.smak.ui.SmakFragment"
+        android:label="Smak"
+        tools:layout="@layout/fragment_smak" />
+    <fragment
+        android:id="@+id/buscadorFragment2"
+        android:name="com.example.smak.buscar.BuscadorFragment"
+        android:label="Buscar"
+        tools:layout="@layout/fragment_buscador" />
+    <fragment
+        android:id="@+id/createFragment2"
+        android:name="com.example.smak.ui.CreateFragment"
+        android:label="Add"
+        tools:layout="@layout/fragment_create" />
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="com.example.smak.ProfileFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment2_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/comprasFragment2"
+        android:name="com.example.smak.compras.ComprasFragment"
+        android:label="Shop"
+        tools:layout="@layout/fragment_compras" />
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.smak.WelcomeFragment"
+        android:label="Bienvenido"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+</navigation>

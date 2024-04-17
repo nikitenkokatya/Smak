@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.smak.ui.usecase.CreateViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:layout_marginBottom="100dp"
+        tools:context=".ui.CreateFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- RecyclerView para mostrar las imágenes seleccionadas -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Nombre -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvImagenes"
+                    android:layout_gravity="center"
+                    android:layout_width="382dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilnombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tienombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewmodel.nombre}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Ingredientes -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilingredientes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingredientes">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieingredientes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Escribe los ingredientes aquí"
+                        android:inputType="textMultiLine"
+                        android:lines="5"
+                        android:maxLines="10"
+                        android:minLines="1"
+                        android:text="@={viewmodel.ingredientes}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Pasos -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilpasos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pasos">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiepasos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Escribe los pasos aquí"
+                        android:inputType="textMultiLine"
+                        android:lines="10"
+                        android:maxLines="20"
+                        android:minLines="1"
+                        android:text="@={viewmodel.pasos}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Tiempo -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tiltiempo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tiempo">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tietiempo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Tiempo de preparación"
+                        android:text="@={viewmodel.tiempo}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Tipo -->
+                <Spinner
+                    android:id="@+id/sptipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+                <!-- Botón Guardar -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGuardarReceta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:text="Guardar Receta" />
+
+                <Button
+                    android:id="@+id/btnunafoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Button" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
