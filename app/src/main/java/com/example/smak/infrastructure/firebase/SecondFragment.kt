@@ -48,14 +48,14 @@ class SecondFragment : Fragment() {
             val password2 = binding.tiePassword2.text.toString()
 
             if (password != password2) {
-                binding.tilPassword2.error = "Passwords do not match"
+                binding.tilPassword2.error = "Las contraseñas no coinciden"
                 return@setOnClickListener
             } else {
                 binding.tilPassword2.error = null
             }
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Please enter email and password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Introduce email and password", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -67,18 +67,6 @@ class SecondFragment : Fragment() {
                         Toast.makeText(requireContext(), "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
-        }
-    }
-
-
-    private fun signOutAndStartSignInActivity() {
-        mAuth.signOut()
-
-        mGoogleSignInClient.signOut().addOnCompleteListener(requireActivity()) {
-            // Optional: Update UI or show a message to the user
-            val intent = Intent(requireActivity(), SecondFragment::class.java)
-            startActivity(intent)
-            requireActivity().finish()
         }
     }
 

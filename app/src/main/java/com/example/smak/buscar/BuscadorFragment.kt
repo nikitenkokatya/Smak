@@ -29,7 +29,7 @@ class BuscadorFragment : Fragment() {
         val apiKey = "cbac8ca59ade4d04b3bd2ab780365021"
         val client = SpoonacularApiClient()
 
-        binding.btnBuscar.setOnClickListener {
+        /*binding.btnBuscar.setOnClickListener {
             /*val query = binding.tiebuscar.text.toString()
             if (query.isNotEmpty()) {
                 client.searchRecipes(query, 10, apiKey) { response ->
@@ -44,7 +44,7 @@ class BuscadorFragment : Fragment() {
                 //val recipes = response.body()?.results ?: emptyList()
                 println(response)
             }
-        }
+        }*/
 
     }
 

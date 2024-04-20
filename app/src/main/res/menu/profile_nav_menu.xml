@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_creadas"
+        android:icon="@drawable/ic_home"
+        android:title="Creadas" />
+    <item
+        android:id="@+id/nav_guardar"
+        android:icon="@drawable/ic_buscar"
+        android:title="Guardadas" />
+</menu>

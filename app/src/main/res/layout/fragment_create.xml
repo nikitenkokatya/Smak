@@ -22,20 +22,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- RecyclerView para mostrar las imágenes seleccionadas -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <!-- Nombre -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvImagenes"
-                    android:layout_gravity="center"
-                    android:layout_width="382dp"
+                    android:layout_width="411dp"
                     android:layout_height="200dp"
-                    android:layout_marginTop="16dp" />
+                    android:layout_gravity="center_vertical|center" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btnfotos"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        app:srcCompat="@drawable/ic_images" />
+
+                    <ImageView
+                        android:id="@+id/btnunafoto"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:srcCompat="@drawable/ic_image" />
+                </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilnombre"
@@ -51,12 +71,10 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Ingredientes -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilingredientes"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ingredientes">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tieingredientes"
@@ -71,12 +89,10 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Pasos -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilpasos"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Pasos">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tiepasos"
@@ -90,12 +106,10 @@
                         android:text="@={viewmodel.pasos}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Tiempo -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tiltiempo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Tiempo">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietiempo"
@@ -105,14 +119,12 @@
                         android:text="@={viewmodel.tiempo}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Tipo -->
                 <Spinner
                     android:id="@+id/sptipo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp" />
 
-                <!-- Botón Guardar -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnGuardarReceta"
                     android:layout_width="wrap_content"
@@ -121,11 +133,7 @@
                     android:layout_marginTop="16dp"
                     android:text="Guardar Receta" />
 
-                <Button
-                    android:id="@+id/btnunafoto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

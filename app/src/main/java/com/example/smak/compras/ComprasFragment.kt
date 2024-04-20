@@ -22,6 +22,7 @@ import com.example.smak.compras.data.Compras
 import com.example.smak.compras.ui.ComprasCreateState
 import com.example.smak.compras.ui.ComprasCreateViewModel
 import com.example.smak.compras.ui.ComprasListViewModel
+import com.example.smak.compras.ui.ListStateCompras
 import com.example.smak.databinding.FragmentComprasBinding
 import com.example.smak.ui.usecase.ListState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -37,12 +38,12 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
     private val viewmodel: ComprasCreateViewModel by viewModels()
     private val listviewmodel: ComprasListViewModel by viewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentComprasBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -63,21 +64,25 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
 
         listviewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
             when (state) {
-                is ListState.Success -> onSuccessList()
-                is ListState.Error -> onNoErrorList()
+                is ListStateCompras.NoData -> onNoData()
+                is ListStateCompras.Success -> onSuccessList()
             }
         })
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 ComprasCreateState.NombreEmptyError -> mostrarMensajeError("Nombre de ingrediente vacío")
-                is ComprasCreateState.Success<*> -> {
-                    val ingredienteAgregado = state.data as String
-                }
+                is ComprasCreateState.Success<*> -> {}
                 is ComprasCreateState.Error -> mostrarMensajeError("Error al agregar ingrediente: ${state.ex.message}")
             }
         })
     }
+
+    private fun onNoData() {
+        binding.lotiesNoCompras.visibility = VISIBLE
+        binding.rvcompras.visibility = GONE
+    }
+
     private fun mostrarMensajeError(mensaje: String) {
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
     }
@@ -88,6 +93,9 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
     }
 
     fun onNombreEmpty(){
+
+    }
+    private fun onLoading() {
 
     }
     fun onSuccessList(){

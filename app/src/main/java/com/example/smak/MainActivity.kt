@@ -3,17 +3,12 @@ package com.example.smak
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.View
-import androidx.fragment.app.Fragment
-import com.example.smak.buscar.BuscadorFragment
-import com.example.smak.compras.ComprasFragment
 import com.example.smak.databinding.ActivityMainBinding
-import com.example.smak.ui.CreateFragment
-import com.example.smak.ui.SmakFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -56,6 +51,32 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
     }
 
+    fun setAppBarGone() {
+        supportActionBar?.hide()
+    }
+
+    fun setBottomNavGone() {
+        binding.bottnav.visibility = View.INVISIBLE
+    }
+
+    fun setBottomNavVisible() {
+        binding.bottnav.visibility = View.VISIBLE
+    }
+
+   /* fun setAppBarVisible() {
+        supportActionBar!!.show()
+        binding.appBarLayout.visibility = View.VISIBLE
+    }*/
+    fun setAppBarVisible() {
+        supportActionBar?.show()
+        binding.appBarLayout.visibility = View.VISIBLE
+    }
+
+    fun updateAppBar(title: String?) {
+        setAppBarVisible()
+        supportActionBar!!.title = title
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -72,8 +93,10 @@ class MainActivity : AppCompatActivity() {
     }
     fun createNotificationChannel() {
         val notificationManager: NotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel(CHANNEL_ID, "Important Notification Channel",
-            NotificationManager.IMPORTANCE_HIGH,).apply {
+        val channel = NotificationChannel(
+            CHANNEL_ID, "Important Notification Channel",
+            NotificationManager.IMPORTANCE_HIGH,
+        ).apply {
             description = "This notification contains important announcement, etc."
         }
         notificationManager.createNotificationChannel(channel)

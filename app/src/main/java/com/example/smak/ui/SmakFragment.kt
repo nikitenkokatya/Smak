@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smak.MainActivity
 import com.example.smak.databinding.FragmentSmakBinding
 import com.example.smak.ui.adapter.RecetaAdapter
 import com.example.smak.ui.usecase.ListState
@@ -41,19 +42,21 @@ class SmakFragment : Fragment() {
             recetaAdapter.submitList(recetas)
         })
 
-
         viewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
-            // Manejar el estado del ViewModel
             when (state) {
                 is ListState.Success -> onSuccess()
                 is ListState.Error -> onNoError()
             }
         })
 
-        // Cargar la lista de recetas
         viewmodel.getAllRecetas()
-
     }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).setBottomNavVisible()
+    }
+
     fun onSuccess(){
         //binding.imageView.visibility = GONE
         binding.rvlista.visibility = VISIBLE

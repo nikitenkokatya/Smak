@@ -19,14 +19,13 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lotiesNoCompras"
-        android:layout_width="276dp"
-        android:layout_height="262dp"
+        android:layout_width="275dp"
+        android:layout_height="275dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.445"
+        android:layout_marginBottom="78dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/compras" />

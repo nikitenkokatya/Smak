@@ -1,6 +1,7 @@
 package com.example.smak.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,9 +16,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.smak.MainActivity
 import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentCreateBinding
 import com.example.smak.ui.adapter.PhotoAdapter
@@ -25,7 +28,10 @@ import com.example.smak.ui.adapter.RecetaAdapter
 import com.example.smak.ui.usecase.CreateState
 import com.example.smak.ui.usecase.CreateViewModel
 import com.google.android.material.textfield.TextInputLayout
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.lang.Exception
+import android.util.Base64
 
 
 class CreateFragment : Fragment() {
@@ -38,7 +44,7 @@ class CreateFragment : Fragment() {
 
 
     private lateinit var photoAdapter: PhotoAdapter
-    private val selectedPhotos = mutableListOf<Uri>()
+    private val selectedPhotos = mutableListOf<String>()
 
     private val selectedVideos = mutableListOf<Uri>()
 
@@ -59,12 +65,9 @@ class CreateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        photoAdapter = PhotoAdapter(selectedPhotos)
-        binding.rvImagenes.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        binding.rvImagenes.adapter = photoAdapter
+        initrv()
 
-        // Listener para el botón de agregar foto
+
        /* binding.btnAgregarImagen.setOnClickListener {
             //abrirGaleria()
             abrirGaleriaParaUnaFoto()
@@ -75,19 +78,18 @@ class CreateFragment : Fragment() {
               }
         /*binding.btnSeleccionarUnaFoto.setOnClickListener {
             abrirGaleriaParaUnaFoto()
-        }
-
-        // Configurar el botón para seleccionar varias fotos
-        binding.btnSeleccionarVariasFotos.setOnClickListener {
-            abrirGaleriaParaVariasFotos()
         }*/
 
 
-        val ciudades = arrayOf("Malaga", "Cadiz", "Barcelona")
-        val adapterCiudades =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, ciudades)
-        adapterCiudades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.sptipo.adapter = adapterCiudades
+        binding.btnfotos.setOnClickListener {
+            abrirGaleriaParaVariasFotos()
+        }
+
+
+        val tipos = arrayOf("Pescado", "Carne", "Postre", "Desayuno")
+        val adapterTipos = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tipos)
+        adapterTipos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.sptipo.adapter = adapterTipos
 
         txtWatcher = LogInTetxWatcher(binding.tilnombre)
         binding.tienombre.addTextChangedListener(txtWatcher)
@@ -101,26 +103,36 @@ class CreateFragment : Fragment() {
         txtWatcher = LogInTetxWatcher(binding.tiltiempo)
         binding.tietiempo.addTextChangedListener(txtWatcher)
 
-
         binding.btnGuardarReceta.setOnClickListener {
             viewmodel.tipo = binding.sptipo.selectedItem.toString()
             viewmodel.validateCredentials()
         }
+
         viewmodel.getState().observe(viewLifecycleOwner, Observer {
             when (it) {
                 CreateState.NombreEmptyError -> onCodeError()
                 CreateState.IngredientesEmptyError -> onFormatError()
                 CreateState.PasosError -> onFechaError()
                 CreateState.TiempoError -> onTimpoError()
+                CreateState.ImagenesEmptyError -> onFormatError()
                 is CreateState.Error -> onError(it.ex)
                 is CreateState.Success<*> -> onSuccess(it.data as Receta)
             }
         })
     }
 
+    fun initrv(){
+        photoAdapter = PhotoAdapter(selectedPhotos)
+        binding.rvImagenes.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        binding.rvImagenes.adapter = photoAdapter
+    }
     fun onCodeError() {
         binding.tilnombre.error = "Introduce el codigo"
         binding.tilnombre.requestFocus()
+    }
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).setBottomNavVisible()
     }
 
     fun onFormatError() {
@@ -149,26 +161,18 @@ class CreateFragment : Fragment() {
     }
 
     fun onSuccess(receta: Receta) {
-
-        // findNavController().popBackStack()
         Toast.makeText(requireContext(), "Receta guardada correctamente", Toast.LENGTH_SHORT).show()
-
     }
 
 
     open inner class LogInTetxWatcher(val tilerror: TextInputLayout) : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
         }
-
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
         }
-
         override fun afterTextChanged(s: Editable?) {
             tilerror.error = null
         }
-
     }
 
     private fun abrirGaleriaParaUnaFoto() {
@@ -177,16 +181,14 @@ class CreateFragment : Fragment() {
         startActivityForResult(intent, REQUEST_CODE_SELECCION_UNA_IMAGEN)
     }
 
-    // Método para abrir la galería y permitir seleccionar varias fotos
     private fun abrirGaleriaParaVariasFotos() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // Permitir múltiples fotos
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         startActivityForResult(intent, REQUEST_CODE_SELECCION_VARIAS_IMAGENES)
     }
 
     private fun abrirGaleria() {
-        // Verificar si ya se alcanzó el límite de fotos
         if (selectedPhotos.size >= MAX_PHOTOS) {
             Toast.makeText(
                 requireContext(),
@@ -200,7 +202,7 @@ class CreateFragment : Fragment() {
         intent.type = "image/*"
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-        startActivityForResult(intent, REQUEST_CODE_SELECCION_IMAGENES)
+        startActivityForResult(intent, REQUEST_CODE_SELECCION_VARIAS_IMAGENES)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -208,32 +210,64 @@ class CreateFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_CODE_SELECCION_UNA_IMAGEN -> {
-                    // Manejar la selección de una sola imagen
                     val uri = data?.data
+
                     if (uri != null) {
-                        // Agregar la URI al arreglo de fotos seleccionadas
-                        selectedPhotos.clear()
-                        selectedPhotos.add(uri)
+                        val base64 = obtenerBase64DesdeUri(requireContext(), uri)
+                        //selectedPhotos.clear()
+                        selectedPhotos.add(base64)
+
+                        base64.let {
+                            viewmodel.addImage(it)
+                        }
+
                         photoAdapter.notifyDataSetChanged()
                     }
                 }
 
                 REQUEST_CODE_SELECCION_VARIAS_IMAGENES -> {
-                    // Manejar la selección de varias imágenes
                     data?.clipData?.let { clipData ->
-                        // Limpiar la lista de fotos seleccionadas
-                        selectedPhotos.clear()
-                        // Agregar las URIs de las imágenes seleccionadas al arreglo
+                        //selectedPhotos.clear()
                         for (i in 0 until clipData.itemCount) {
                             val uri = clipData.getItemAt(i).uri
-                            selectedPhotos.add(uri)
+                            val base64 = obtenerBase64DesdeUri(requireContext(), uri)
+
+                            selectedPhotos.add(base64)
+
+                            base64.let {
+                                viewmodel.addImage(it)
+                            }
                         }
+
                         photoAdapter.notifyDataSetChanged()
                     }
                 }
             }
         }
     }
+
+    fun obtenerBase64DesdeUri(context: Context, uri: Uri): String {
+        var base64String: String? = null
+        var inputStream: InputStream? = null
+        try {
+            inputStream = context.contentResolver.openInputStream(uri)
+            val buffer = ByteArrayOutputStream()
+            val bufferSize = 1024
+            val bufferArray = ByteArray(bufferSize)
+            var len: Int
+            while (inputStream!!.read(bufferArray).also { len = it } != -1) {
+                buffer.write(bufferArray, 0, len)
+            }
+            val data = buffer.toByteArray()
+            base64String = Base64.encodeToString(data, Base64.NO_WRAP)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            inputStream?.close()
+        }
+        return base64String!!
+    }
+
     companion object {
         private const val REQUEST_CODE_SELECCION_IMAGENES = 123
         private const val REQUEST_CODE_SELECCION_UNA_IMAGEN = 124

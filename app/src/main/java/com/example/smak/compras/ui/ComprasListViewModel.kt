@@ -11,12 +11,12 @@ import com.example.smak.database.repository.ComprasRepository
 import com.example.smak.ui.usecase.ListState
 import kotlinx.coroutines.launch
 
-class ComprasListViewModel :ViewModel(){
+class ComprasListViewModel : ViewModel() {
     private val comprasRepository = ComprasRepository()
     private val comprasList = MutableLiveData<List<Compras>>()
-    private val state = MutableLiveData<ListState>()
+    private val state = MutableLiveData<ListStateCompras>()
 
-    fun getState(): LiveData<ListState> {
+    fun getState(): LiveData<ListStateCompras> {
         return state
     }
 
@@ -25,21 +25,23 @@ class ComprasListViewModel :ViewModel(){
     }
 
     fun obtenerIngredientes() {
-        //state.postValue(ListState.Loading)
         comprasRepository.getList { listaIngredientes ->
             comprasList.postValue(listaIngredientes)
-            state.postValue(ListState.Success)
+
+            when {
+                listaIngredientes.isEmpty() -> state.postValue(ListStateCompras.NoData)
+                else -> state.postValue(ListStateCompras.Success)
+            }
         }
     }
 
-  fun borrarIngrediente(compras: Compras) {
+    fun borrarIngrediente(compras: Compras) {
         viewModelScope.launch {
             try {
                 comprasRepository.borrarIngrediente(compras)
                 obtenerIngredientes()
             } catch (e: Exception) {
                 Log.e("ComprasListViewModel", "Error al borrar el ingrediente: ${e.message}")
-                state.postValue(ListState.Error)
             }
         }
     }

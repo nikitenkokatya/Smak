@@ -201,13 +201,11 @@ class LogInFragment : Fragment() {
             val email = binding.tieEmail.text.toString()
             val password = binding.tiePassword.text.toString()
 
-            // Validación de campos de entrada
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(requireContext(), "Please enter email and password", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Inicio de sesión con correo electrónico y contraseña usando Firebase Authentication
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
@@ -215,7 +213,6 @@ class LogInFragment : Fragment() {
                         startActivity(intent)
                         requireActivity().finish()
                     } else {
-                        // Manejar el fallo del inicio de sesión
                         Toast.makeText(requireContext(), "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }

@@ -19,6 +19,9 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+
+        (activity as MainActivity).setBottomNavGone()
+
         return binding.root
     }
 
