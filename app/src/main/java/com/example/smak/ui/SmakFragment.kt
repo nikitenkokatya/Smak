@@ -13,12 +13,14 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smak.MainActivity
+import com.example.smak.R
+import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentSmakBinding
 import com.example.smak.ui.adapter.RecetaAdapter
 import com.example.smak.ui.usecase.ListState
 import com.example.smak.ui.usecase.ListViewModel
 
-class SmakFragment : Fragment() {
+class SmakFragment : Fragment(), RecetaAdapter.onClick{
     private var _binding: FragmentSmakBinding? = null
     private val binding get() = _binding!!
 
@@ -66,13 +68,24 @@ class SmakFragment : Fragment() {
         binding.rvlista.visibility = GONE
     }
     fun initRV(){
-        recetaAdapter = RecetaAdapter()
+        recetaAdapter = RecetaAdapter(this)
         binding.rvlista.layoutManager = LinearLayoutManager(requireContext())
         binding.rvlista.adapter = recetaAdapter
     }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onClickDetails(receta: Receta) {
+        var bundle = Bundle()
+        bundle.putParcelable(Receta.TAG, receta)
+
+        findNavController().navigate(R.id.action_smakFragment_to_detailFragment, bundle)
+    }
+
+    override fun userOnLongClick(receta: Receta): Boolean {
+        return true
     }
 
 }

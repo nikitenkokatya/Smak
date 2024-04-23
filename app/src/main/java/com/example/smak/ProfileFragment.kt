@@ -8,15 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smak.databinding.FragmentProfileBinding
 import com.example.smak.ui.adapter.RecetaAdapter
 import com.example.smak.ui.usecase.ListState
-import com.example.smak.ui.usecase.ListViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {
@@ -26,10 +25,10 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapterCreadas: RecetaAdapter
-    private lateinit var adapterGuardadas: RecetaAdapter
-    private val viewmodel: ListViewModel by viewModels()
-
+    private lateinit var adapterCreadas: CreadasAdapter
+    private lateinit var adapterGuardadas: GuardadasAdapter
+    private val viewmodel: CreadasListViewModel by viewModels()
+    private val viewmodelfav: GuardadasViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,16 +58,22 @@ class ProfileFragment : Fragment() {
             signOutAndStartSignInActivity()
         }
 
-
-        adapterCreadas = RecetaAdapter()
-        adapterGuardadas = RecetaAdapter()
-        binding.rvcreadas.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvguardadas.layoutManager = LinearLayoutManager(requireContext())
+        adapterCreadas = CreadasAdapter()
+        binding.rvcreadas.layoutManager = GridLayoutManager(requireContext(), 3)
         binding.rvcreadas.adapter = adapterCreadas
+
+        adapterGuardadas = GuardadasAdapter()
+        binding.rvguardadas.layoutManager = GridLayoutManager(requireContext(), 3)
         binding.rvguardadas.adapter = adapterGuardadas
 
-        viewmodel.recetas.observe(viewLifecycleOwner, Observer { recetas ->
+
+
+        viewmodel.getRecetas().observe(viewLifecycleOwner, Observer { recetas ->
             adapterCreadas.submitList(recetas)
+        })
+
+        viewmodelfav.recetasFavoritas.observe(viewLifecycleOwner, Observer { recetas ->
+            adapterGuardadas.submitList(recetas.toList())
         })
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
@@ -78,16 +83,17 @@ class ProfileFragment : Fragment() {
             }
         })
 
-        viewmodel.getAllRecetas()
+
         binding.btnnavigate.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_creadas -> {
+                    viewmodel.getMisRecetas()
                     binding.rvcreadas.visibility = View.VISIBLE
                     binding.rvguardadas.visibility = View.GONE
-
                     true
                 }
                 R.id.nav_guardar -> {
+                    viewmodelfav.cargarRecetasFavoritas()
                     binding.rvcreadas.visibility = View.GONE
                     binding.rvguardadas.visibility = View.VISIBLE
                     true
@@ -95,8 +101,10 @@ class ProfileFragment : Fragment() {
                 else -> false
             }
         }
+
         binding.rvcreadas.visibility = View.VISIBLE
         binding.rvguardadas.visibility = View.GONE
+        viewmodel.getMisRecetas()
     }
 
     private fun signOutAndStartSignInActivity() {
@@ -109,7 +117,7 @@ class ProfileFragment : Fragment() {
 
     fun onSuccess(){
         //binding.imageView.visibility = GONE
-        binding.rvcreadas.visibility = View.VISIBLE
+        //binding.rvcreadas.visibility = View.VISIBLE
     }
     fun onNoError(){
         //binding.imageView.visibility = VISIBLE

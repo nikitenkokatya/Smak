@@ -1,6 +1,7 @@
 package com.example.smak
 
 import android.app.Application
+import android.content.Context
 
 object Locator {
     private var application: Application? = null

@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.smak.data.Receta
 import com.example.smak.databinding.ItemLayoutBinding
 
-class RecetaAdapter():ListAdapter<Receta, RecetaViewHolder>(RECETA_COMPARATOR) {
+class RecetaAdapter( private val listener: onClick):ListAdapter<Receta, RecetaViewHolder>(RECETA_COMPARATOR) {
+    interface onClick {
+        fun onClickDetails(receta: Receta)
+        fun userOnLongClick(receta: Receta): Boolean
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecetaViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return  RecetaViewHolder(ItemLayoutBinding.inflate(layoutInflater, parent, false))
@@ -16,6 +20,11 @@ class RecetaAdapter():ListAdapter<Receta, RecetaViewHolder>(RECETA_COMPARATOR) {
     override fun onBindViewHolder(holder: RecetaViewHolder, position: Int) {
         val item = currentList[position]
         holder.bind(item)
+
+        holder.binding.root.setOnClickListener() { _ ->
+            listener.onClickDetails(item)
+        }
+
     }
 
 
@@ -26,7 +35,7 @@ class RecetaAdapter():ListAdapter<Receta, RecetaViewHolder>(RECETA_COMPARATOR) {
             }
 
             override fun areContentsTheSame(oldItem: Receta, newItem: Receta): Boolean {
-                return newItem.id == oldItem.id
+                return newItem.nombre == oldItem.nombre
             }
         }
     }
