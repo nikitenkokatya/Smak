@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
-    <Button
-        android:id="@+id/btnSalir"
-        android:layout_width="121dp"
-        android:layout_height="41dp"
-        android:text="Salir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.857"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.169" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -44,7 +32,7 @@
         app:layout_constraintVertical_bias="0.106" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtguardadas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -56,7 +44,7 @@
         app:layout_constraintVertical_bias="0.014" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtcreadas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"

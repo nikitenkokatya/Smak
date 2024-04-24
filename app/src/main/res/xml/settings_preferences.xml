@@ -1,0 +1,61 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        android:icon="@drawable/ic_person"
+        android:key="@string/key_account"
+        android:summary="@string/summary_account"
+        android:title="@string/title_account_setting" />
+
+    <Preference
+        android:icon="@drawable/ic_person"
+        android:key="@string/key_sort"
+        android:summary="@string/summary_sort"
+        android:title="@string/title_sort_setting" />
+
+    <PreferenceCategory android:title="@string/category_notification"
+        android:icon="@drawable/ic_buscar">
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:key="@string/key_active_notifications"
+            android:title="@string/title_active_notifications" />
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="1"
+            android:entries="@array/ringtone_entries"
+            android:entryValues="@array/ringtone_values"
+            android:key="@string/key_ringtone"
+            android:title="@string/title_ringtone" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/category_misc">
+        <ListPreference
+            android:icon="@drawable/ic_home"
+            android:key="@string/key_modo"
+            android:title="@string/title_modo"
+            android:defaultValue="0"
+            android:entries="@array/modo_entries"
+            android:entryValues="@array/modo_values">
+        </ListPreference>
+
+        <ListPreference
+            android:icon="@drawable/ic_enviar"
+            android:key="@string/key_lang"
+            android:title="@string/title_lang"
+            android:defaultValue="ES"
+            android:entries="@array/lang_entries"
+            android:entryValues="@array/lang_values">
+        </ListPreference>
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="@string/logout">
+        <Preference
+            android:icon="@drawable/ic_logout"
+            android:key="@string/key_logout"
+            android:title="@string/title_logout" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -23,4 +23,7 @@ class GuardadasViewModel:ViewModel() {
     fun agregarRecetaFavorita(receta: Receta) {
         guardadasRepository.addRecetaFavorita(receta)
     }
+    fun borrarRecetaFavorita(receta: Receta){
+        guardadasRepository.borrarRecetaFavorita(receta)
+    }
 }

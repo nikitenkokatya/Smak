@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.smak.databinding.FragmentFirstBinding
 import com.example.smak.databinding.FragmentWelcomeBinding
+import com.google.firebase.auth.FirebaseAuth
 
 
 class WelcomeFragment : Fragment() {
@@ -20,8 +21,6 @@ class WelcomeFragment : Fragment() {
     ): View? {
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
-        (activity as MainActivity).setBottomNavGone()
-
         return binding.root
     }
 
@@ -33,6 +32,26 @@ class WelcomeFragment : Fragment() {
         }
         binding.btnGoToSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_welcomeFragment_to_SecondFragment)
+        }
+    }
+
+    private fun login() {
+        (activity as MainActivity).setBottomNavVisible()
+        findNavController().navigate(R.id.action_welcomeFragment_to_smakFragment)
+    }
+
+    private fun isLoggedIn(): Boolean {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        return currentUser != null
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        (activity as MainActivity).setBottomNavGone()
+
+        if (isLoggedIn()) {
+            login()
         }
     }
 

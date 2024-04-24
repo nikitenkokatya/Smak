@@ -21,7 +21,7 @@ class RecetaAdapter( private val listener: onClick):ListAdapter<Receta, RecetaVi
         val item = currentList[position]
         holder.bind(item)
 
-        holder.binding.root.setOnClickListener() { _ ->
+        holder.binding.clItem.setOnClickListener() { _ ->
             listener.onClickDetails(item)
         }
 

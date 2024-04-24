@@ -1,25 +1,30 @@
 package com.example.smak
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentProfileBinding
-import com.example.smak.ui.adapter.RecetaAdapter
 import com.example.smak.ui.usecase.ListState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
-class ProfileFragment : Fragment() {
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
+class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas, GuardadasAdapter.onClickGuardadas {
     private lateinit var mAuth: FirebaseAuth
 
     private var _binding: FragmentProfileBinding? = null
@@ -42,10 +47,6 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
         val user = mAuth.currentUser
 
         if (user != null) {
@@ -53,20 +54,6 @@ class ProfileFragment : Fragment() {
             val userNameBeforeAt = userEmail.substringBefore('@')
             binding.textView.text = userNameBeforeAt
         }
-        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        binding.btnSalir.setOnClickListener {
-            signOutAndStartSignInActivity()
-        }
-
-        adapterCreadas = CreadasAdapter()
-        binding.rvcreadas.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding.rvcreadas.adapter = adapterCreadas
-
-        adapterGuardadas = GuardadasAdapter()
-        binding.rvguardadas.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding.rvguardadas.adapter = adapterGuardadas
-
-
 
         viewmodel.getRecetas().observe(viewLifecycleOwner, Observer { recetas ->
             adapterCreadas.submitList(recetas)
@@ -82,7 +69,7 @@ class ProfileFragment : Fragment() {
                 is ListState.Error -> onNoError()
             }
         })
-
+        setUpToolbar()
 
         binding.btnnavigate.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -102,19 +89,59 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        initrvCreadas()
+
+        initrvGuardadas()
+
         binding.rvcreadas.visibility = View.VISIBLE
         binding.rvguardadas.visibility = View.GONE
         viewmodel.getMisRecetas()
+
+
+        binding.button2.setOnClickListener {
+            showEditProfileDialog()
+        }
+
+        //binding.txtcreadas.text = countCreadas.toString()
+        //binding.txtguardadas.text = countGuardadas.toString()
     }
 
-    private fun signOutAndStartSignInActivity() {
-        mAuth.signOut()
+    fun initrvCreadas(){
+        adapterCreadas = CreadasAdapter(this)
+        binding.rvcreadas.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.rvcreadas.adapter = adapterCreadas
+    }
 
-        mGoogleSignInClient.signOut().addOnCompleteListener(requireActivity()) {
-            findNavController().navigate(R.id.action_profileFragment2_to_welcomeFragment)
+    fun initrvGuardadas(){
+        adapterGuardadas = GuardadasAdapter(this)
+        binding.rvguardadas.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.rvguardadas.adapter = adapterGuardadas
+    }
+    private fun showEditProfileDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.editarperfil_layout, null)
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun setUpToolbar() {
+        val menuhost: MenuHost = requireActivity()
+        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.action_settings -> {
+                findNavController().navigate(R.id.settingsFragment)
+                true
+            }
+            else -> false
         }
     }
-
     fun onSuccess(){
         //binding.imageView.visibility = GONE
         //binding.rvcreadas.visibility = View.VISIBLE
@@ -126,5 +153,24 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+    override fun onClickDetails(receta: Receta) {
+        var bundle = Bundle()
+        bundle.putParcelable(Receta.TAG, receta)
+
+        findNavController().navigate(R.id.action_profileFragment2_to_detailFragment, bundle)
+    }
+
+    override fun onClickDetailsC(receta: Receta) {
+        var bundle = Bundle()
+        bundle.putParcelable(Receta.TAG, receta)
+
+        findNavController().navigate(R.id.action_profileFragment2_to_detailFragment, bundle)
+    }
+
+    override fun userOnLongClick(receta: Receta): Boolean {
+        return true
     }
 }

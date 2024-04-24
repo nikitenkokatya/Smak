@@ -56,7 +56,9 @@ class SmakFragment : Fragment(), RecetaAdapter.onClick{
 
     override fun onResume() {
         super.onResume()
+
         (activity as MainActivity).setBottomNavVisible()
+        (activity as MainActivity).setDefaultHighlight()
     }
 
     fun onSuccess(){

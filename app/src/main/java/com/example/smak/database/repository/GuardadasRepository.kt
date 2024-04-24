@@ -9,6 +9,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 class GuardadasRepository {
     private val db = FirebaseFirestore.getInstance()
     var recetasFavoritas = mutableSetOf<Receta>()
+
+    private val auth: FirebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
     fun addRecetaFavorita(receta: Receta) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         currentUser?.email?.let { userEmail ->
@@ -51,16 +55,28 @@ class GuardadasRepository {
                             imagenesList.toMutableList()
                         )
                         recetasFavoritas.add(receta)
-
-                        //val crypto = document.toObject(Receta::class.java)
-                        //recetasFavoritas.add(crypto)
-                        //addRecetaFavorita(crypto)
                     }
                     onSuccess()
                 }
                 .addOnFailureListener { exception ->
-
                 }
+        }
+    }
+
+    fun borrarRecetaFavorita(receta: Receta){
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val userEmail = currentUser.email
+            userEmail?.let { email ->
+                db.collection("users").document(email)
+                    .collection("favoritos")
+                    .document(receta.nombre)
+                    .delete()
+                    .addOnSuccessListener {
+                    }
+                    .addOnFailureListener { exception ->
+                    }
+            }
         }
     }
 }

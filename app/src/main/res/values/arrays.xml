@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="typeuser_signup">
+        <item>Usuario</item>
+        <item>Administrador</item>
+        <item>Invitado</item>
+        <item>Cliente</item>
+    </string-array>
+
+    <string-array name="ringtone_entries">
+        <item>Maluma</item>
+        <item>Feid</item>
+        <item>Quevedo</item>
+    </string-array>
+
+    <string-array name="ringtone_values">
+        <item>MA</item>
+        <item>FE</item>
+        <item>QU</item>
+    </string-array>
+
+    <string-array name="customer_entries">
+        <item>Ordenar por nombre</item>
+        <item>Ordenar por email</item>
+    </string-array>
+
+    <string-array name="customer_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="item_entries">
+        <item>Ordenar por nombre</item>
+        <item>Ordenar por precio</item>
+    </string-array>
+
+    <string-array name="item_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="invoice_entries">
+        <item>Ordenar por articulo</item>
+        <item>Ordenar por cliente</item>
+    </string-array>
+
+    <string-array name="invoice_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="task_entries">
+        <item>Ordenar por título</item>
+        <item>Ordenar por cliente</item>
+    </string-array>
+
+    <string-array name="task_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="modo_entries">
+        <item>Claro</item>
+        <item>Oscuro</item>
+    </string-array>
+
+    <string-array name="modo_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="lang_entries">
+        <item>Idioma del sistema</item>
+        <item>Español</item>
+        <item>Inglés</item>
+        <item>Ucraniano</item>
+    </string-array>
+
+    <string-array name="lang_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>

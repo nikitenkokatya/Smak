@@ -1,6 +1,5 @@
 package com.example.smak
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +12,9 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentDetailBinding
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +24,8 @@ class DetailFragment : Fragment(), MenuProvider {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private val viewmodel: GuardadasViewModel by viewModels()
+
+    private lateinit var saveMenuItem: MenuItem
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,29 +42,45 @@ class DetailFragment : Fragment(), MenuProvider {
         val receta = requireArguments().getParcelable<Receta>(Receta.TAG)
         binding.receta = receta
 
+        viewmodel.recetasFavoritas.observe(viewLifecycleOwner, Observer { recetas ->
+            if (viewmodel.recetasFavoritas.value!!.contains(binding.receta))
+                saveMenuItem.icon = resources.getDrawable(R.drawable.ic_savemarcado)
+            else
+                saveMenuItem.icon = resources.getDrawable(R.drawable.ic_guardar)
+        })
+
+        viewmodel.cargarRecetasFavoritas()
+
     }
 
     private fun setUpToolbar() {
         val menuhost: MenuHost = requireActivity()
         menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
+
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.guardar_menu, menu)
+
+        saveMenuItem = menu.findItem(R.id.action_guardar)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_guardar -> {
-                val receta = binding.receta
-                if (receta != null) {
-                    guardarReceta(receta)
-                    true
+                if (!viewmodel.recetasFavoritas.value!!.contains(binding.receta)) {
+                    saveMenuItem.icon = resources.getDrawable(R.drawable.ic_savemarcado)
+                    guardarReceta(binding.receta!!)
+                    viewmodel.cargarRecetasFavoritas()
                 } else {
-                    false
+                    saveMenuItem.icon = resources.getDrawable(R.drawable.ic_guardar)
+                    viewmodel.borrarRecetaFavorita(binding.receta!!)
+                    viewmodel.cargarRecetasFavoritas()
                 }
                 true
             }
-            else -> false
+            else -> {
+                false
+            }
         }
     }
 
@@ -69,6 +88,7 @@ class DetailFragment : Fragment(), MenuProvider {
         viewmodel.agregarRecetaFavorita(receta)
         Snackbar.make(binding.root, "Receta guardada", Snackbar.LENGTH_SHORT).show()
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

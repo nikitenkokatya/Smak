@@ -98,4 +98,7 @@ dependencies {
     implementation ("com.airbnb.android:lottie:3.4.0")
     implementation("com.google.firebase:firebase-analytics")
 
+
+    //dataStore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
 }

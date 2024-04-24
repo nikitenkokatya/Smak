@@ -10,4 +10,7 @@
     <string name="facebook_app_id">736372578303490</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logout">Tu cuenta</string>
+    <string name="title_logout">Cerrar sesión</string>
+    <string name="key_logout">logout</string>
 </resources>

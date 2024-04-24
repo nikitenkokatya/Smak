@@ -2,19 +2,26 @@ package com.example.smak
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.preference.ListPreference
 import com.example.smak.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener{
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var topLevelDestinations: Set<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +31,23 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        topLevelDestinations = setOf(R.id.welcomeFragment, R.id.smakFragment,
+            R.id.buscadorFragment2, R.id.createFragment2, R.id.comprasFragment2, R.id.profileFragment2)
+
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        navController.addOnDestinationChangedListener(this)
+
+        // Configurar el primer destino
+        navController.navigate(R.id.welcomeFragment)
+
+        appBarConfiguration = AppBarConfiguration.Builder(topLevelDestinations)
+            .build()
+
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottnav)
         bottomNavigationView.setOnItemSelectedListener { item ->
-            val navController = findNavController(R.id.nav_host_fragment_content_main)
             when (item.itemId) {
                 R.id.nav_home -> navController.navigate(R.id.smakFragment)
                 R.id.nav_buscador -> navController.navigate(R.id.buscadorFragment2)
@@ -41,14 +58,30 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        if (isLoggedIn()) {
-            bottomNavigationView.visibility = View.VISIBLE
-            navController.navigate(R.id.smakFragment)
+        setTheme()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+        if (destination.id in topLevelDestinations) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
         } else {
-            bottomNavigationView.visibility = View.GONE
-            navController.navigate(R.id.welcomeFragment)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        setupActionBarWithNavController(navController)
+    }
+
+    private fun setTheme() {
+        val modoValue =
+            getSharedPreferences("settings", Context.MODE_PRIVATE)!!.getString("modo", "0")
+
+        when (modoValue!!.toInt()) {
+            0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
     }
 
     fun setAppBarGone() {
@@ -63,10 +96,10 @@ class MainActivity : AppCompatActivity() {
         binding.bottnav.visibility = View.VISIBLE
     }
 
-   /* fun setAppBarVisible() {
-        supportActionBar!!.show()
-        binding.appBarLayout.visibility = View.VISIBLE
-    }*/
+    /* fun setAppBarVisible() {
+         supportActionBar!!.show()
+         binding.appBarLayout.visibility = View.VISIBLE
+     }*/
     fun setAppBarVisible() {
         supportActionBar?.show()
         binding.appBarLayout.visibility = View.VISIBLE
@@ -77,22 +110,18 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.title = title
     }
 
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp() || super.onSupportNavigateUp()
+    fun setDefaultHighlight() {
+        val menuItem = binding.bottnav.menu.findItem(R.id.nav_home)
+        menuItem?.isChecked = true
     }
 
-    private fun isLoggedIn(): Boolean {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        return currentUser != null
-    }
-
-    companion object{
+    companion object {
         const val CHANNEL_ID = "dummy channel"
     }
+
     fun createNotificationChannel() {
-        val notificationManager: NotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager: NotificationManager =
+            getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val channel = NotificationChannel(
             CHANNEL_ID, "Important Notification Channel",
             NotificationManager.IMPORTANCE_HIGH,
