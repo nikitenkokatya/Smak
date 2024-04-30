@@ -63,6 +63,8 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
             adapterGuardadas.submitList(recetas.toList())
         })
 
+
+
         viewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is ListState.Success -> onSuccess()

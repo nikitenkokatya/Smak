@@ -33,10 +33,6 @@ class PhotoListAdapter (private val photos: List<String>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(base64: String) {
-            /*Glide.with(binding.root)
-                .load(photoUri)
-                .into(binding.imageView2)*/
-
             binding.imageView2.setImageBitmap(base64ToBitmap(base64))
         }
 
