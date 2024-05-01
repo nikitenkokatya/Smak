@@ -96,6 +96,9 @@
         <action
             android:id="@+id/action_detailFragment_to_buscadorFragment2"
             app:destination="@id/buscadorFragment2" />
+        <action
+            android:id="@+id/action_detailFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -114,5 +117,13 @@
         <action
             android:id="@+id/action_recetPasswordFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.smak.ChatFragment"
+        android:label="ChatFragment" >
+        <action
+            android:id="@+id/action_chatFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 </navigation>

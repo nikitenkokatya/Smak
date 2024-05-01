@@ -82,7 +82,7 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
 
-    //implementation ("com.google.cloud:google-cloud-translate:2.30.0")
+    //implementation ("com.google.cloud:google-cloud-translate:2.1.0")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

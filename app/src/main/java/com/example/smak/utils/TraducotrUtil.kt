@@ -6,7 +6,6 @@ import com.google.cloud.translate.Translation
 
 class TraductorUtil {
     private val translate: Translate = TranslateOptions.getDefaultInstance().service
-
     fun translateString(textToTranslate: String?, sourceLang: String, targetLang: String): String? {
         val translation: Translation = translate.translate(
             textToTranslate,

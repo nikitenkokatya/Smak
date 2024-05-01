@@ -16,6 +16,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentDetailBinding
 import com.example.smak.perfil.ui.usecase.GuardadasViewModel
@@ -122,6 +123,10 @@ class DetailFragment : Fragment(), MenuProvider{
                 } else {
                     Toast.makeText(requireContext(), "No se encontró ninguna aplicación para compartir", Toast.LENGTH_SHORT).show()
                 }
+                true
+            }
+            R.id.action_chat ->{
+                findNavController().navigate(R.id.action_detailFragment_to_chatFragment)
                 true
             }
             else -> {

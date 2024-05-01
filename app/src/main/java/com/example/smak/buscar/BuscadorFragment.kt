@@ -145,12 +145,12 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
        val url = "https://api.spoonacular.com/recipes/" + receta.id + "/information?apiKey=" + apiKey
 
 
-        findNavController().navigate(R.id.action_buscadorFragment2_to_detailFragment)
-       /* val baseUrl = "https://api.spoonacular.com/recipes/" + receta.id + "/information?"
+        /*findNavController().navigate(R.id.action_buscadorFragment2_to_detailFragment)
+        val baseUrl = "https://api.spoonacular.com/recipes/" + receta.id + "/information?"
         val translatedBaseUrl = translateString(baseUrl, "en", "es")
-        val url = "$translatedBaseUrl&apiKey=$apiKey"
+        val url = "$translatedBaseUrl&apiKey=$apiKey"*/
 
-        Log.d("a", url)*/
+        //Log.d("a", url)
         Log.d("a", url)
 
     }
