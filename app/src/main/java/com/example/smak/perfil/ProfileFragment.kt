@@ -1,4 +1,4 @@
-package com.example.smak
+package com.example.smak.perfil
 
 import android.app.AlertDialog
 import android.content.ContentValues
@@ -18,13 +18,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.smak.R
 import com.example.smak.base.BaseFragmentDialog
 import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentProfileBinding
+import com.example.smak.perfil.ui.adapter.CreadasAdapter
+import com.example.smak.perfil.ui.adapter.GuardadasAdapter
+import com.example.smak.perfil.ui.usecase.CreadasListViewModel
+import com.example.smak.perfil.ui.usecase.GuardadasViewModel
 import com.example.smak.ui.usecase.ListState
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas, GuardadasAdapter.onClickGuardadas {
@@ -157,7 +159,6 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
         super.onDestroyView()
         _binding = null
     }
-
 
     override fun onClickDetails(receta: Receta) {
         var bundle = Bundle()

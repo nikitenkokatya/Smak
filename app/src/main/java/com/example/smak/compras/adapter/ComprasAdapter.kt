@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.smak.compras.data.Compras
+import com.example.smak.data.Compras
 import com.example.smak.databinding.ItemComprasBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

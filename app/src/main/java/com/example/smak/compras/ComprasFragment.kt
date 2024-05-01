@@ -20,7 +20,7 @@ import com.example.smak.R
 import com.example.smak.base.BaseFragmentDialog
 import com.example.smak.compras.adapter.ComprasAdapter
 import com.example.smak.compras.adapter.SimpleItemTouchHelperCallback
-import com.example.smak.compras.data.Compras
+import com.example.smak.data.Compras
 import com.example.smak.compras.ui.ComprasCreateState
 import com.example.smak.compras.ui.ComprasCreateViewModel
 import com.example.smak.compras.ui.ComprasListViewModel

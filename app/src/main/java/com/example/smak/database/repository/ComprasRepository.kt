@@ -1,8 +1,7 @@
 package com.example.smak.database.repository
 
 import android.util.Log
-import com.example.smak.compras.data.Compras
-import com.example.smak.database.resource.Resource
+import com.example.smak.data.Compras
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore

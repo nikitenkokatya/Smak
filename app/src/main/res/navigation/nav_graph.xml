@@ -53,7 +53,7 @@
         tools:layout="@layout/fragment_create" />
     <fragment
         android:id="@+id/profileFragment2"
-        android:name="com.example.smak.ProfileFragment"
+        android:name="com.example.smak.perfil.ProfileFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -109,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/recetPasswordFragment"
-        android:name="com.example.smak.RecetPasswordFragment"
+        android:name="com.example.smak.infrastructure.firebase.RecetPasswordFragment"
         android:label="RecetPasswordFragment" >
         <action
             android:id="@+id/action_recetPasswordFragment_to_FirstFragment"

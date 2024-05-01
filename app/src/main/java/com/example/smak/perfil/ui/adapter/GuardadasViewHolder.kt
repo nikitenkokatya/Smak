@@ -1,4 +1,4 @@
-package com.example.smak
+package com.example.smak.perfil.ui.adapter
 
 import android.content.Context
 import android.graphics.Bitmap

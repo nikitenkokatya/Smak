@@ -1,13 +1,11 @@
-package com.example.smak
+package com.example.smak.perfil.ui.usecase
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.smak.compras.data.Compras
 import com.example.smak.data.Receta
 import com.example.smak.database.repository.RecetaRepository
-import com.example.smak.database.resource.Resource
 import com.example.smak.ui.usecase.ListState
 import kotlinx.coroutines.launch
 

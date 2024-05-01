@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.smak.compras.data.Compras
+import com.example.smak.data.Compras
 import com.example.smak.database.repository.ComprasRepository
-import com.example.smak.ui.usecase.ListState
 import kotlinx.coroutines.launch
 
 class ComprasListViewModel : ViewModel() {

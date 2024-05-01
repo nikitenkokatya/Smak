@@ -1,4 +1,4 @@
-package com.example.smak
+package com.example.smak.perfil.ui.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

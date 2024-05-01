@@ -1,4 +1,4 @@
-package com.example.smak
+package com.example.smak.infrastructure.firebase
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
