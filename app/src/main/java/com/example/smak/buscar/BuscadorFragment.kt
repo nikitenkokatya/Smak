@@ -14,14 +14,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smak.DetailFragment
+import com.example.smak.R
 import com.example.smak.api.SpoonacularApiClient
 import com.example.smak.buscar.adapter.BusquedaAdapter
 import com.example.smak.data.RecetaAPI
 import com.example.smak.databinding.FragmentBuscadorBinding
 import org.json.JSONObject
 import java.util.Locale
-
 
 class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
 
@@ -142,15 +144,18 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
     override fun onClickDetails(receta: RecetaAPI) {
        val url = "https://api.spoonacular.com/recipes/" + receta.id + "/information?apiKey=" + apiKey
 
-        Log.d("a", url)
+
+        findNavController().navigate(R.id.action_buscadorFragment2_to_detailFragment)
        /* val baseUrl = "https://api.spoonacular.com/recipes/" + receta.id + "/information?"
         val translatedBaseUrl = translateString(baseUrl, "en", "es")
         val url = "$translatedBaseUrl&apiKey=$apiKey"
 
         Log.d("a", url)*/
+        Log.d("a", url)
+
     }
 
-   /* fun translateJson(jsonString: String): String {
+    /*fun translateJson(jsonString: String): String {
         val translatedText = translateString(jsonString, "en", "es")
         return translatedText ?: jsonString
     }
@@ -161,5 +166,4 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
     override fun userOnLongClick(receta: RecetaAPI): Boolean {
         return true
     }
-
 }

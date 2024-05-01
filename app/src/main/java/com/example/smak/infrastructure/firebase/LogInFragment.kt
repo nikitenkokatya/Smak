@@ -1,13 +1,16 @@
 package com.example.smak.infrastructure.firebase
 
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.smak.MainActivity
 import com.example.smak.R
 import com.example.smak.databinding.FragmentFirstBinding
@@ -22,7 +25,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class LogInFragment : Fragment() {
 
-   /*  companion object {
+    /*  companion object {
         private const val RC_SIGN_IN = 9001
     }
 
@@ -163,48 +166,62 @@ class LogInFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }*/
-   companion object {
-       private const val RC_SIGN_IN = 9001
-   }
-
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
 
 
+        sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val rememberMe = sharedPreferences.getBoolean(REMEMBER_ME_KEY, false)
+        binding.cbxRememberMe.isChecked = rememberMe
+
+
         binding.btngoogle.setOnClickListener {
             signIn()
         }
-        /*
-        binding.btnregister.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }*/
 
+
+        binding.btnChangePassword.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_recetPasswordFragment)
+        }
 
 
         binding.btnLogin.setOnClickListener {
             val email = binding.tieEmail.text.toString()
             val password = binding.tiePassword.text.toString()
+            val rememberMe = binding.cbxRememberMe.isChecked
 
+
+            if (rememberMe) {
+                rememberUserLogin(rememberMe)
+            }
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Please enter email and password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Please enter email and password",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
+
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
@@ -213,11 +230,16 @@ class LogInFragment : Fragment() {
                         startActivity(intent)
                         requireActivity().finish()
                     } else {
-                        Toast.makeText(requireContext(), "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Login failed: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
         }
     }
+
 
     private fun signIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -225,13 +247,16 @@ class LogInFragment : Fragment() {
             .requestEmail()
             .build()
 
+
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
 
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -239,10 +264,15 @@ class LogInFragment : Fragment() {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account?.idToken!!)
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Google sign in failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Google sign in failed: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
+
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
@@ -250,19 +280,37 @@ class LogInFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    Toast.makeText(requireContext(), "Signed in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Signed in as ${user?.displayName}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
                 } else {
-                    Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
     }
+
+    private fun rememberUserLogin(rememberMe: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(REMEMBER_ME_KEY, rememberMe)
+        editor.apply()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    companion object {
+        private const val RC_SIGN_IN = 9001
+        private const val PREFS_NAME = "RememberMePrefs"
+        private const val REMEMBER_ME_KEY = "rememberMe"
+    }
 }
+

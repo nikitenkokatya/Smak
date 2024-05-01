@@ -14,36 +14,35 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smak.R
 import com.example.smak.base.BaseFragmentDialog
 import com.example.smak.compras.adapter.ComprasAdapter
+import com.example.smak.compras.adapter.SimpleItemTouchHelperCallback
 import com.example.smak.compras.data.Compras
 import com.example.smak.compras.ui.ComprasCreateState
 import com.example.smak.compras.ui.ComprasCreateViewModel
 import com.example.smak.compras.ui.ComprasListViewModel
 import com.example.smak.compras.ui.ListStateCompras
 import com.example.smak.databinding.FragmentComprasBinding
-import com.example.smak.ui.usecase.ListState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.lang.Exception
-
 
 class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
     private var _binding: FragmentComprasBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var ingredientesAdapter: ComprasAdapter
-
     private val viewmodel: ComprasCreateViewModel by viewModels()
     private val listviewmodel: ComprasListViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentComprasBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -76,8 +75,11 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
                 is ComprasCreateState.Error -> mostrarMensajeError("Error al agregar ingrediente: ${state.ex.message}")
             }
         })
-    }
 
+        val callback = SimpleItemTouchHelperCallback(ingredientesAdapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(binding.rvcompras)
+    }
     private fun onNoData() {
         binding.lotiesNoCompras.visibility = VISIBLE
         binding.rvcompras.visibility = GONE
@@ -155,3 +157,5 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
         return true
     }
 }
+
+

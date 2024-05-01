@@ -1,5 +1,6 @@
 package com.example.smak
 
+import android.content.ContentValues
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
@@ -15,11 +17,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.example.smak.base.BaseFragmentDialog
 import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentDetailBinding
 import com.google.android.material.snackbar.Snackbar
 
-class DetailFragment : Fragment(), MenuProvider {
+class DetailFragment : Fragment(), MenuProvider{
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!

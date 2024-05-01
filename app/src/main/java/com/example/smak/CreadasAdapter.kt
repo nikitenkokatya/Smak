@@ -10,8 +10,8 @@ import com.example.smak.databinding.PerfilLayoutBinding
 class CreadasAdapter(private val listener: onClickCreadas): ListAdapter<Receta, CreadasViewHolder>(CREATE_COMPARATOR) {
 
     interface onClickCreadas {
-        fun onClickDetails(receta: Receta)
-        fun userOnLongClick(receta: Receta): Boolean
+        fun onClickDetailsC(receta: Receta)
+        fun userOnLongClickC(receta: Receta): Boolean
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreadasViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -23,11 +23,11 @@ class CreadasAdapter(private val listener: onClickCreadas): ListAdapter<Receta, 
         holder.bind(item, Locator.requieredApplication)
 
         holder.binding.root.setOnClickListener() {
-            listener.onClickDetails(item)
+            listener.onClickDetailsC(item)
         }
 
         holder.binding.root.setOnLongClickListener {
-            listener.userOnLongClick(item)
+            listener.userOnLongClickC(item)
             true
         }
     }

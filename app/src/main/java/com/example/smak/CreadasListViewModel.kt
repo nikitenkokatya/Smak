@@ -1,8 +1,10 @@
 package com.example.smak
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.smak.compras.data.Compras
 import com.example.smak.data.Receta
 import com.example.smak.database.repository.RecetaRepository
 import com.example.smak.database.resource.Resource
@@ -35,6 +37,17 @@ class CreadasListViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 state.postValue(ListState.Error)
+            }
+        }
+    }
+
+    fun borrarReceta(receta: Receta) {
+        viewModelScope.launch {
+            try {
+               repository.borrarMiReceta(receta)
+
+            } catch (e: Exception) {
+                Log.e("ComprasListViewModel", "Error al borrar el ingrediente: ${e.message}")
             }
         }
     }

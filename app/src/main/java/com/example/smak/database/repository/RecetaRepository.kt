@@ -63,8 +63,9 @@ class RecetaRepository  {
 
     companion object {
         private val db = FirebaseFirestore.getInstance()
+        private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-        // Agregar receta para todos los usuarios y para el usuario actual
+
         fun agregarReceta(receta: Receta): Resource {
             return try {
                 val currentUser = FirebaseAuth.getInstance().currentUser
@@ -106,19 +107,15 @@ class RecetaRepository  {
 
                     db.collection("recetas").document(receta.nombre).set(nuevaReceta)
 
-                    // Devolver el resultado exitoso
                     Resource.Success("Receta agregada para todos los usuarios")
                 } else {
-                    // Si el usuario no está autenticado, devolver un error
                     Resource.Error(Exception("Usuario no autenticado"))
                 }
             } catch (e: Exception) {
-                // Manejar cualquier excepción y devolver un error
                 Resource.Error(e)
             }
         }
 
-        // Método privado para agregar la receta a la colección de recetas del usuario actual
         private fun agregarRecetaAlPerfilUsuario(receta: Receta, autor: String) {
             val imagenesStrings = receta.imagenes.map { it.toString() }
 
@@ -140,7 +137,6 @@ class RecetaRepository  {
 
         }
 
-        // Obtener todas las recetas del usuario actual
 
 
         suspend fun getAllRecetas(): Resource {
@@ -172,25 +168,6 @@ class RecetaRepository  {
             }
         }
     }
-        /*suspend fun getMisRecetas(): Resource {
-            return try {
-                val currentUser = FirebaseAuth.getInstance().currentUser
-                val autor = currentUser?.email
-                if (autor != null) {
-                    val querySnapshot = db.collection("users").document(autor).collection("privadas").get().await()
-                    val recetasList = mutableListOf<Receta>()
-                    for (document in querySnapshot.documents) {
-                        val receta = document.toObject(Receta::class.java)
-                        receta?.let { recetasList.add(it) }
-                    }
-                    Resource.Success(recetasList)
-                } else {
-                    Resource.Error(Exception("Usuario no encontrado"))
-                }
-            } catch (e: Exception) {
-                Resource.Error(e)
-            }
-        }*/
 
     fun getMisRecetas(callback: (List<Receta>) -> Unit) {
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -226,7 +203,30 @@ class RecetaRepository  {
             }
         }
     }
-
-
+    fun borrarMiReceta(receta: Receta) {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val userEmail = currentUser.email
+            userEmail?.let { email ->
+                db.collection("recetas").document(receta.nombre)
+                    .delete()
+                    .addOnSuccessListener {
+                        db.collection("users").document(email)
+                            .collection("privadas")
+                            .document(receta.nombre)
+                            .delete()
+                            .addOnSuccessListener {
+                                Log.d("RecetaRepository", "Receta borrada exitosamente")
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.e("RecetaRepository", "Error al borrar la receta del perfil de usuario: ${exception.message}")
+                            }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("RecetaRepository", "Error al borrar la receta de la lista general: ${exception.message}")
+                    }
+            }
+        }
+    }
 
 }

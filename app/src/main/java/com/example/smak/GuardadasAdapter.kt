@@ -10,8 +10,7 @@ import com.example.smak.databinding.PerfilLayoutBinding
 class GuardadasAdapter(private val listener: onClickGuardadas): ListAdapter<Receta, GuardadasViewHolder>(GUARDAR_COMPARATOR) {
 
     interface onClickGuardadas {
-        fun onClickDetailsC(receta: Receta)
-        fun userOnLongClick(receta: Receta): Boolean
+        fun onClickDetails(receta: Receta)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuardadasViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -22,14 +21,8 @@ class GuardadasAdapter(private val listener: onClickGuardadas): ListAdapter<Rece
         val item = currentList[position]
         holder.bind(item, Locator.requieredApplication)
 
-
         holder.binding.root.setOnClickListener() {
-            listener.onClickDetailsC(item)
-        }
-
-        holder.binding.root.setOnLongClickListener {
-            listener.userOnLongClick(item)
-            true
+            listener.onClickDetails(item)
         }
     }
 
