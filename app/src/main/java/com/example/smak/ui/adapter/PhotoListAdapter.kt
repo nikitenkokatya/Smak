@@ -6,6 +6,7 @@ import android.net.Uri
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -14,17 +15,52 @@ import com.example.smak.data.Receta
 import com.example.smak.databinding.ItemFotoBinding
 import com.example.smak.databinding.ItemFotolistBinding
 
-class PhotoListAdapter (private val photos: List<String>) :
+class PhotoListAdapter(private val photos: List<String>) :
     RecyclerView.Adapter<PhotoListAdapter.PhotoListViewHolder>() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var layoutManager: LinearLayoutManager
+    private var listener: OnItemChangedListener? = null
+
+    interface OnItemChangedListener {
+        fun onItemChanged(position: Int, listSize: Int)
+    }
+
+    fun setOnItemChangedListener(listener: OnItemChangedListener) {
+        this.listener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return PhotoListViewHolder(ItemFotolistBinding.inflate(inflater, parent, false))
     }
 
-    override fun onBindViewHolder(holder:PhotoListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PhotoListViewHolder, position: Int) {
         val photo = photos[position]
         holder.bind(photo)
+    }
+
+    fun setRecyclerView(recyclerView: RecyclerView) {
+        this.recyclerView = recyclerView
+        this.layoutManager = recyclerView.layoutManager as LinearLayoutManager
+
+        this.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_IDLE,
+                    RecyclerView.SCROLL_STATE_SETTLING,
+                    RecyclerView.SCROLL_STATE_DRAGGING -> {
+                        listener?.onItemChanged(
+                            layoutManager.findFirstVisibleItemPosition() + 1,
+                            photos.size
+                        )
+
+                    }
+                }
+            }
+        })
     }
 
     override fun getItemCount(): Int = photos.size

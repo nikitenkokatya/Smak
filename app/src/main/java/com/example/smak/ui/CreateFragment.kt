@@ -117,6 +117,7 @@ class CreateFragment : Fragment() {
                 CreateState.ImagenesEmptyError -> onFormatError()
                 is CreateState.Error -> onError(it.ex)
                 is CreateState.Success<*> -> onSuccess(it.data as Receta)
+                else -> {}
             }
         })
     }

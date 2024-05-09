@@ -63,7 +63,7 @@ class RecetaRepository  {
         }
 
         private fun agregarRecetaAlPerfilUsuario(receta: Receta, autor: String) {
-            val imagenesStrings = receta.imagenes.map { it.toString() }
+            val imagenesStrings = receta.imagenes.map { it }
 
             val nuevaReceta = hashMapOf(
                 "id" to receta.id,
@@ -75,10 +75,10 @@ class RecetaRepository  {
                 "autor" to autor,
                 "imagenes" to imagenesStrings
             )
+
             db.collection("users").document(autor).collection("privadas")
                 .document(receta.nombre)
                 .set(nuevaReceta)
-
         }
 
         suspend fun getAllRecetas(): Resource {
