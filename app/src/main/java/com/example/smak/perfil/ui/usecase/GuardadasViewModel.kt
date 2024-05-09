@@ -1,5 +1,6 @@
 package com.example.smak.perfil.ui.usecase
 
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,21 @@ class GuardadasViewModel:ViewModel() {
                 _recetasFavoritas.value = guardadasRepository.recetasFavoritas
             }
         )
+    }
+
+    fun cargarRecetasFavoritas(textView: TextView) {
+        guardadasRepository.getRecetaFavorita(
+            onSuccess = {
+                _recetasFavoritas.value = guardadasRepository.recetasFavoritas
+                textView.text = guardadasRepository.recetasFavoritas.size.toString()
+            }
+        )
+    }
+
+    fun cargarRecetasFavoritasSinSuccess(textView: TextView) {
+        guardadasRepository.getRecetaFavorita({
+            textView.text = guardadasRepository.recetasFavoritas.size.toString()
+        })
     }
 
     fun agregarRecetaFavorita(receta: Receta) {

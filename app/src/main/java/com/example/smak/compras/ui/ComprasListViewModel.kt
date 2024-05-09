@@ -10,6 +10,7 @@ import com.example.smak.database.repository.ComprasRepository
 import kotlinx.coroutines.launch
 
 class ComprasListViewModel : ViewModel() {
+    private var ingredienteBorrado : Compras? = null
     private val comprasRepository = ComprasRepository()
     private val comprasList = MutableLiveData<List<Compras>>()
     private val state = MutableLiveData<ListStateCompras>()
@@ -37,9 +38,22 @@ class ComprasListViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 comprasRepository.borrarIngrediente(compras)
+                ingredienteBorrado = compras
                 obtenerIngredientes()
             } catch (e: Exception) {
                 Log.e("ComprasListViewModel", "Error al borrar el ingrediente: ${e.message}")
+            }
+        }
+    }
+
+    fun deshacerBorrado() {
+        viewModelScope.launch {
+            try {
+                comprasRepository.agregarIngrediente(ingredienteBorrado!!.nombre)
+                ingredienteBorrado = null
+                obtenerIngredientes()
+            } catch (e: Exception) {
+                Log.e("ComprasListViewModel", "Error al añadir el ingrediente: ${e.message}")
             }
         }
     }

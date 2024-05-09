@@ -170,10 +170,10 @@ class LogInFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var sharedPreferences: SharedPreferences
 
-
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
 
+    private var rememberSession: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -183,36 +183,23 @@ class LogInFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
-
-
-        sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val rememberMe = sharedPreferences.getBoolean(REMEMBER_ME_KEY, false)
-        binding.cbxRememberMe.isChecked = rememberMe
-
+        sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         binding.btngoogle.setOnClickListener {
             signIn()
         }
 
-
         binding.btnChangePassword.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_recetPasswordFragment)
         }
 
-
         binding.btnLogin.setOnClickListener {
             val email = binding.tieEmail.text.toString()
             val password = binding.tiePassword.text.toString()
-            val rememberMe = binding.cbxRememberMe.isChecked
 
-
-            if (rememberMe) {
-                rememberUserLogin(rememberMe)
-            }
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
@@ -222,13 +209,17 @@ class LogInFragment : Fragment() {
                 return@setOnClickListener
             }
 
-
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
-                        val intent = Intent(requireContext(), MainActivity::class.java)
-                        startActivity(intent)
-                        requireActivity().finish()
+                        if (binding.cbxRememberMe.isChecked) {
+                            rememberSession = true
+                            with(sharedPreferences.edit()) {
+                                putBoolean("rememberSession", true)
+                                apply()
+                            }
+                        }
+                        navigateToMainActivity()
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -238,8 +229,22 @@ class LogInFragment : Fragment() {
                     }
                 }
         }
+
+        rememberSession = sharedPreferences.getBoolean("rememberSession", false)
+        if (rememberSession) {
+            if (auth.currentUser != null) {
+                navigateToMainActivity()
+            }
+        }
     }
 
+
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
 
     private fun signIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -256,8 +261,6 @@ class LogInFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
@@ -272,7 +275,6 @@ class LogInFragment : Fragment() {
             }
         }
     }
-
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
@@ -295,12 +297,6 @@ class LogInFragment : Fragment() {
             }
     }
 
-    private fun rememberUserLogin(rememberMe: Boolean) {
-        val editor = sharedPreferences.edit()
-        editor.putBoolean(REMEMBER_ME_KEY, rememberMe)
-        editor.apply()
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -309,8 +305,6 @@ class LogInFragment : Fragment() {
 
     companion object {
         private const val RC_SIGN_IN = 9001
-        private const val PREFS_NAME = "RememberMePrefs"
-        private const val REMEMBER_ME_KEY = "rememberMe"
     }
 }
 

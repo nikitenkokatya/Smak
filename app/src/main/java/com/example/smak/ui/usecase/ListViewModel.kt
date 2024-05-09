@@ -27,7 +27,10 @@ class ListViewModel : ViewModel(){
     fun getAllRecetas() {
         viewModelScope.launch {
             try {
+                state.value = ListState.Loading(true)
                 val result = RecetaRepository.getAllRecetas()
+                state.value = ListState.Loading(false)
+
                 when (result) {
                     is Resource.Success<*> -> {
                         val recetas = result.data as List<Receta>

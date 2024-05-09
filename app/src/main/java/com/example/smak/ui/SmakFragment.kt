@@ -44,12 +44,13 @@ class SmakFragment : Fragment(), RecetaAdapter.onClick{
             recetaAdapter.submitList(recetas)
         })
 
-        viewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
+        viewmodel.getState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ListState.Success -> onSuccess()
                 is ListState.Error -> onNoError()
+                is ListState.Loading -> showProgressBar(state.value)
             }
-        })
+        }
 
         viewmodel.getAllRecetas()
     }
@@ -61,6 +62,12 @@ class SmakFragment : Fragment(), RecetaAdapter.onClick{
         (activity as MainActivity).setDefaultHighlight()
     }
 
+    private fun showProgressBar(value : Boolean){
+        if(value)
+            findNavController().navigate(R.id.action_smakFragment_to_fragmentProgressDialog)
+        else
+            findNavController().popBackStack()
+    }
     fun onSuccess(){
         //binding.imageView.visibility = GONE
         binding.rvlista.visibility = VISIBLE

@@ -5,6 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/welcomeFragment">
 
+
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.smak.infrastructure.firebase.LogInFragment"
@@ -36,6 +37,9 @@
         <action
             android:id="@+id/action_smakFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_smakFragment_to_fragmentProgressDialog"
+            app:destination="@id/fragmentProgressDialog" />
     </fragment>
     <fragment
         android:id="@+id/buscadorFragment2"
@@ -96,9 +100,6 @@
         <action
             android:id="@+id/action_detailFragment_to_buscadorFragment2"
             app:destination="@id/buscadorFragment2" />
-        <action
-            android:id="@+id/action_detailFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -118,12 +119,16 @@
             android:id="@+id/action_recetPasswordFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.example.smak.ChatFragment"
-        android:label="ChatFragment" >
+    <dialog
+        android:id="@+id/fragmentProgressDialog"
+        android:name="com.example.smak.base.FragmentProgressDialog"
+        android:label="FragmentProgressDialog" >
         <action
-            android:id="@+id/action_chatFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
+            android:id="@+id/action_fragmentProgressDialog_to_smakFragment"
+            app:destination="@id/smakFragment" />
+    </dialog>
 </navigation>
+
+
+
+

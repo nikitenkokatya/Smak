@@ -1,6 +1,7 @@
 package com.example.smak.perfil.ui.usecase
 
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,8 +17,8 @@ class CreadasListViewModel : ViewModel() {
         return recetas
     }
 
-    private var state = MutableLiveData<ListState>()
-    fun getState(): MutableLiveData<ListState> {
+    private var state = MutableLiveData<CreadasListState>()
+    fun getState(): MutableLiveData<CreadasListState> {
         return state
     }
 
@@ -26,15 +27,38 @@ class CreadasListViewModel : ViewModel() {
             try {
                 repository.getMisRecetas() { list ->
                     when {
-                        list.isEmpty() -> state.postValue(ListState.Error)
+                        list.isEmpty() -> state.postValue(CreadasListState.Error)
                         else -> {
                             recetas.postValue(list)
-                            state.postValue(ListState.Success)
+                            state.postValue(CreadasListState.Success)
                         }
                     }
                 }
             } catch (e: Exception) {
-                state.postValue(ListState.Error)
+                state.postValue(CreadasListState.Error)
+            }
+        }
+    }
+
+    fun getMisRecetas(textView: TextView) {
+        viewModelScope.launch {
+            try {
+                repository.getMisRecetas() { list ->
+                    when {
+                        list.isEmpty() -> {
+                            textView.text = "0"
+                            state.postValue(CreadasListState.Error)
+                        }
+
+                        else -> {
+                            recetas.postValue(list)
+                            textView.text = list.size.toString()
+                            state.postValue(CreadasListState.Success)
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                state.postValue(CreadasListState.Error)
             }
         }
     }
@@ -42,7 +66,7 @@ class CreadasListViewModel : ViewModel() {
     fun borrarReceta(receta: Receta) {
         viewModelScope.launch {
             try {
-               repository.borrarMiReceta(receta)
+                repository.borrarMiReceta(receta)
 
             } catch (e: Exception) {
                 Log.e("ComprasListViewModel", "Error al borrar el ingrediente: ${e.message}")
