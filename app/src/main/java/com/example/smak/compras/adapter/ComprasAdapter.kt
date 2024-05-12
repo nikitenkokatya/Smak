@@ -74,8 +74,3 @@ class ComprasAdapter(private val listener:onClickListener):
     }
 }
 
-
-
-
-
-

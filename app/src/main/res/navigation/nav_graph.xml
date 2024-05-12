@@ -47,8 +47,8 @@
         android:label="Buscar"
         tools:layout="@layout/fragment_buscador" >
         <action
-            android:id="@+id/action_buscadorFragment2_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            android:id="@+id/action_buscadorFragment2_to_apiDetailFragment"
+            app:destination="@id/apiDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/createFragment2"
@@ -127,6 +127,10 @@
             android:id="@+id/action_fragmentProgressDialog_to_smakFragment"
             app:destination="@id/smakFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/apiDetailFragment"
+        android:name="com.example.smak.buscar.ApiDetailFragment"
+        android:label="ApiDetailFragment" />
 </navigation>
 
 

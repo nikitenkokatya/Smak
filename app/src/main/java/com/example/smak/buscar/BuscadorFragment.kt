@@ -1,6 +1,8 @@
 package com.example.smak.buscar
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,22 +10,24 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.smak.DetailFragment
 import com.example.smak.R
 import com.example.smak.api.SpoonacularApiClient
 import com.example.smak.buscar.adapter.BusquedaAdapter
 import com.example.smak.data.RecetaAPI
+import com.example.smak.data.RecetaAPIDetails
 import com.example.smak.databinding.FragmentBuscadorBinding
+import com.example.smak.utils.ApiUtils
 import org.json.JSONObject
 import java.util.Locale
+
 
 class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
 
@@ -74,13 +78,25 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
     }
 
     fun searchRecipes(query: String) {
-        client.searchRecipes(query, 50, apiKey) { response ->
-            val handler = Handler(Looper.getMainLooper())
-            handler.post {
-                recipeList = parseJson(response!!)
-                recetaAdapter.submitList(recipeList)
+
+        if (isConnectedToInternet())
+            client.searchRecipes(query, 50, apiKey) { response ->
+                val handler = Handler(Looper.getMainLooper())
+                handler.post {
+                    recipeList = parseJson(response!!)
+                    recetaAdapter.submitList(recipeList)
+                }
             }
-        }
+        else
+            Toast.makeText(context, "No tienes conexión a internet", Toast.LENGTH_SHORT).show()
+    }
+
+    fun isConnectedToInternet(): Boolean {
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
     fun initRV() {
@@ -91,29 +107,38 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
 
     private fun startVoiceInput() {
         if (SpeechRecognizer.isRecognitionAvailable(requireContext())) {
-                speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
-                speechRecognizer.setRecognitionListener(object : RecognitionListener {
-                    override fun onReadyForSpeech(params: Bundle?) {}
-                    override fun onBeginningOfSpeech() {}
-                    override fun onRmsChanged(rmsdB: Float) {}
-                    override fun onBufferReceived(buffer: ByteArray?) {}
-                    override fun onEndOfSpeech() {}
-                    override fun onError(error: Int) {}
-                    override fun onPartialResults(partialResults: Bundle?) {}
-                    override fun onEvent(eventType: Int, params: Bundle?) {}
+            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
+            speechRecognizer.setRecognitionListener(object : RecognitionListener {
+                override fun onReadyForSpeech(params: Bundle?) {}
+                override fun onBeginningOfSpeech() {}
+                override fun onRmsChanged(rmsdB: Float) {}
+                override fun onBufferReceived(buffer: ByteArray?) {}
+                override fun onEndOfSpeech() {}
+                override fun onError(error: Int) {}
+                override fun onPartialResults(partialResults: Bundle?) {}
+                override fun onEvent(eventType: Int, params: Bundle?) {}
 
-                    override fun onResults(results: Bundle?) {
-                        val voiceResults = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                        val searchText = voiceResults?.get(0) ?: ""
-                        binding.srvbuscador.setQuery(searchText, true)
-                    }                })
+                override fun onResults(results: Bundle?) {
+                    val voiceResults =
+                        results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                    val searchText = voiceResults?.get(0) ?: ""
+                    binding.srvbuscador.setQuery(searchText, true)
+                }
+            })
 
-                val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-                speechRecognizer.startListening(speechRecognizerIntent)
+            val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            speechRecognizerIntent.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            speechRecognizer.startListening(speechRecognizerIntent)
         } else {
-            Toast.makeText(requireContext(), "El reconocimiento de voz no está disponible en este dispositivo", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "El reconocimiento de voz no está disponible en este dispositivo",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -142,17 +167,17 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
     }
 
     override fun onClickDetails(receta: RecetaAPI) {
-       val url = "https://api.spoonacular.com/recipes/" + receta.id + "/information?apiKey=" + apiKey
+        client.getRecipeDetail(receta.id, apiKey) { response ->
+            val handler = Handler(Looper.getMainLooper())
+            handler.post {
+                val recetaApiDetails = ApiUtils.getResponseData(response, RecetaAPIDetails::class.java)
 
+                val bundle = Bundle()
+                bundle.putParcelable(RecetaAPIDetails.TAG, recetaApiDetails)
 
-        /*findNavController().navigate(R.id.action_buscadorFragment2_to_detailFragment)
-        val baseUrl = "https://api.spoonacular.com/recipes/" + receta.id + "/information?"
-        val translatedBaseUrl = translateString(baseUrl, "en", "es")
-        val url = "$translatedBaseUrl&apiKey=$apiKey"*/
-
-        //Log.d("a", url)
-        Log.d("a", url)
-
+                findNavController().navigate(R.id.action_buscadorFragment2_to_apiDetailFragment, bundle)
+            }
+        }
     }
 
     /*fun translateJson(jsonString: String): String {

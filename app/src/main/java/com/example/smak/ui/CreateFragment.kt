@@ -12,19 +12,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smak.MainActivity
 import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentCreateBinding
 import com.example.smak.ui.adapter.PhotoAdapter
-import com.example.smak.ui.adapter.RecetaAdapter
 import com.example.smak.ui.usecase.CreateState
 import com.example.smak.ui.usecase.CreateViewModel
 import com.google.android.material.textfield.TextInputLayout
@@ -113,7 +109,7 @@ class CreateFragment : Fragment() {
                 CreateState.NombreEmptyError -> onCodeError()
                 CreateState.IngredientesEmptyError -> onFormatError()
                 CreateState.PasosError -> onFechaError()
-                CreateState.TiempoError -> onTimpoError()
+                CreateState.TiempoError -> onTiempoError()
                 CreateState.ImagenesEmptyError -> onFormatError()
                 is CreateState.Error -> onError(it.ex)
                 is CreateState.Success<*> -> onSuccess(it.data as Receta)
@@ -146,7 +142,7 @@ class CreateFragment : Fragment() {
         binding.tilpasos.requestFocus()
     }
 
-    fun onTimpoError() {
+    fun onTiempoError() {
         binding.tiltiempo.error = "Formato incorrecto"
         binding.tiltiempo.requestFocus()
     }

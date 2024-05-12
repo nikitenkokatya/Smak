@@ -62,11 +62,7 @@ class DetailFragment : Fragment(), MenuProvider{
                 saveMenuItem.icon = resources.getDrawable(R.drawable.ic_guardar)
         })
 
-
         viewmodel.cargarRecetasFavoritas()
-
-
-
 
         receta?.let {
             val imagenes = receta.imagenes
