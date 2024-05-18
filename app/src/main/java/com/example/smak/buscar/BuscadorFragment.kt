@@ -34,13 +34,11 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
     val apiKey = "cbac8ca59ade4d04b3bd2ab780365021"
     val client = SpoonacularApiClient()
 
-
     private var _binding: FragmentBuscadorBinding? = null
     private val binding get() = _binding!!
     lateinit var recetaAdapter: BusquedaAdapter
     private var recipeList: List<RecetaAPI> = emptyList()
     private lateinit var speechRecognizer: SpeechRecognizer
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -142,7 +140,6 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -162,7 +159,6 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
             val recipe = RecetaAPI(id, title, image)
             recipeList.add(recipe)
         }
-
         return recipeList
     }
 

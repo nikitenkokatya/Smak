@@ -87,10 +87,8 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
     GuardadasAdapter.onClickGuardadas {
     private lateinit var mAuth: FirebaseAuth
 
-
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
 
     private lateinit var adapterCreadas: CreadasAdapter
     private lateinit var adapterGuardadas: GuardadasAdapter
@@ -98,11 +96,9 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
     private val viewmodelfav: GuardadasViewModel by viewModels()
     private val perfilViewModel: PerfilViewModel by viewModels()
 
-
     private lateinit var imageView: ImageView
     private lateinit var storage: FirebaseStorage
     private lateinit var imageUri: Uri
-
     private lateinit var base64img: String
     private lateinit var newPhoto: ImageView
 
@@ -119,14 +115,10 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
-
-
         val user = mAuth.currentUser
-
 
         viewmodel.getRecetas().observe(viewLifecycleOwner, Observer { recetas ->
             adapterCreadas.submitList(recetas)
@@ -134,13 +126,11 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
             binding.rvguardadas.visibility = View.GONE
         })
 
-
         viewmodelfav.recetasFavoritas.observe(viewLifecycleOwner, Observer { recetas ->
             adapterGuardadas.submitList(recetas.toList())
             binding.rvcreadas.visibility = View.GONE
             binding.rvguardadas.visibility = View.VISIBLE
         })
-
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
             when (state) {
@@ -149,7 +139,6 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
             }
         })
         setUpToolbar()
-
 
         binding.btnnavigate.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -177,11 +166,9 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
         viewmodel.getMisRecetas(binding.txtcreadas)
         viewmodelfav.cargarRecetasFavoritasSinSuccess(binding.txtguardadas)
 
-
         binding.button2.setOnClickListener {
             showEditProfileDialog()
         }
-
 
         imageView = binding.imageView
         storage = Firebase.storage
@@ -230,7 +217,6 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
         binding.rvguardadas.adapter = adapterGuardadas
     }
 
-
     private fun setUpToolbar() {
         val menuhost: MenuHost = requireActivity()
         menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -239,7 +225,6 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.menu_main, menu)
     }
-
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
@@ -287,9 +272,7 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
     override fun userOnLongClickC(receta: Receta): Boolean {
         val dialog = BaseFragmentDialog.newInstance("Atencion", "¿Seguro que quieres borrar?")
 
-
         dialog.show((context as AppCompatActivity).supportFragmentManager, ContentValues.TAG)
-
 
         dialog.parentFragmentManager.setFragmentResultListener(
             BaseFragmentDialog.request, viewLifecycleOwner
@@ -437,15 +420,12 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
     fun getBitmapFromUri(uri: Uri): Bitmap? {
         var inputStream: InputStream? = null
         try {
-            // Abrir un InputStream desde el URI
             inputStream = requireContext().contentResolver.openInputStream(uri)
 
-            // Decodificar el InputStream en un Bitmap utilizando BitmapFactory
             return BitmapFactory.decodeStream(inputStream)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            // Asegurarse de cerrar el InputStream después de usarlo
             inputStream?.close()
         }
         return null

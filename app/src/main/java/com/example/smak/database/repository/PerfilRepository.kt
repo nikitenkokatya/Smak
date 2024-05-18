@@ -1,19 +1,12 @@
 package com.example.smak.database.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.smak.data.Perfil
-import com.example.smak.data.Receta
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import java.util.UUID
-
 
 class PerfilRepository {
     private val db = FirebaseFirestore.getInstance()
-    private val storage = FirebaseStorage.getInstance()
-
     companion object {
         var userPerfil : Perfil? = null
     }

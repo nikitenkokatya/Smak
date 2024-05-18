@@ -14,8 +14,6 @@ import com.example.smak.databinding.PerfilLayoutBinding
 
 class GuardadasViewHolder (val binding: PerfilLayoutBinding): RecyclerView.ViewHolder(binding.root){
     fun bind(item: Receta, context: Context){
-        //binding.imgperfil.setImageBitmap(base64ToBitmap(item.imagenes[0]))
-
         val img = ImageView(context)
         img.setImageBitmap(base64ToBitmap(item.imagenes[0]))
 

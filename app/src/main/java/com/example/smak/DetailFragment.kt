@@ -1,6 +1,5 @@
 package com.example.smak
 
-
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -80,14 +79,10 @@ class DetailFragment : Fragment(), MenuProvider{
         menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.guardar_menu, menu)
-
-
         saveMenuItem = menu.findItem(R.id.action_guardar)
     }
-
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
@@ -156,22 +151,16 @@ class DetailFragment : Fragment(), MenuProvider{
                 }
                 true
             }
-            R.id.action_chat ->{
-
-                true
-            }
             else -> {
                 false
             }
         }
     }
 
-
     private fun guardarReceta(receta: Receta) {
         viewmodel.agregarRecetaFavorita(receta)
         Snackbar.make(binding.root, "Receta guardada", Snackbar.LENGTH_SHORT).show()
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -11,7 +11,6 @@ import com.example.smak.databinding.ItemLayoutBinding
 
 class RecetaAdapter( private val listener: onClick):ListAdapter<Receta, RecetaViewHolder>(RECETA_COMPARATOR) {
 
-
     interface onClick {
         fun onClickDetails(receta: Receta)
         fun userOnLongClick(receta: Receta): Boolean

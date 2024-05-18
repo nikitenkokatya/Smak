@@ -23,14 +23,11 @@ class ApiDetailFragment : Fragment() {
     private var _binding: FragmentApiDetailBinding? = null
     private val binding get() = _binding!!
     //private val viewmodel: GuardadasViewModel by viewModels()
-
-
     //private lateinit var saveMenuItem: MenuItem
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //setUpToolbar()
         val receta = requireArguments().getParcelable<RecetaAPIDetails>(RecetaAPIDetails.TAG)
         binding.receta = receta
 

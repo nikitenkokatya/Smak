@@ -12,10 +12,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class RecetPasswordFragment : Fragment() {
 
-
     private var _binding: FragmentResetPasswordBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,20 +23,16 @@ class RecetPasswordFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.btnResetPassword.setOnClickListener {
             val email = binding.tiePassword.text.toString()
-
 
             if (email.isEmpty()) {
                 Toast.makeText(requireContext(), "Please enter your email", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
 
             FirebaseAuth.getInstance().sendPasswordResetEmail(email)
                 .addOnCompleteListener { task ->
@@ -49,10 +43,6 @@ class RecetPasswordFragment : Fragment() {
                         Toast.makeText(requireContext(), "Failed to send password reset email: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-
-
-
         }
     }
     override fun onDestroyView() {

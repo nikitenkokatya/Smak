@@ -22,30 +22,7 @@
         <string name="key_ringtone">ringtone</string>
         <string name="title_ringtone">Tono de llamada</string>
 
-    <!-- Ordenar -->
-    <string name="key_sort">sort</string>
-    <string name="title_sort_setting">Ordenar listas</string>
-    <string name="summary_sort">Ordenar clientes, artículos, facturas y tareas</string>
-    <string name="category_sort">Ordenar listas</string>
 
-        <!-- Customer -->
-        <string name="key_customer">customers</string>
-        <string name="title_customer">Clientes</string>
-
-        <!-- Item -->
-        <string name="key_item">items</string>
-        <string name="title_item">Artículos</string>
-        <string name="def_value_item">0</string>
-
-        <!-- Invoice -->
-        <string name="key_invoice">invoices</string>
-        <string name="title_invoice">Facturas</string>
-
-        <!-- Task -->
-        <string name="key_task">tasks</string>
-        <string name="title_task">Tareas</string>
-
-    <!-- Misceláneo -->
     <string name="key_misc">misc</string>
     <string name="category_misc">Otras preferencias</string>
 

@@ -47,7 +47,7 @@ class RecetaRepository  {
                         "pasos" to receta.pasos,
                         "duracion" to receta.duracion,
                         "tipo" to receta.tipo,
-                        "autor" to autor, // Indicar que la receta es para todos los usuarios
+                        "autor" to autor,
                         "imagenes" to imagenesStrings
                     )
 

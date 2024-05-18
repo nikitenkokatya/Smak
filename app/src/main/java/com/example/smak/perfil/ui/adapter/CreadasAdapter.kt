@@ -9,8 +9,7 @@ import com.example.smak.data.Receta
 import com.example.smak.databinding.PerfilLayoutBinding
 
 class CreadasAdapter(private val listener: onClickCreadas): ListAdapter<Receta, CreadasViewHolder>(
-    CREATE_COMPARATOR
-) {
+    CREATE_COMPARATOR) {
 
     interface onClickCreadas {
         fun onClickDetailsC(receta: Receta)

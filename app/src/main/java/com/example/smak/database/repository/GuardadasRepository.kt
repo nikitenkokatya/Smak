@@ -5,7 +5,6 @@ import com.example.smak.data.Receta
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-
 class GuardadasRepository {
     private val db = FirebaseFirestore.getInstance()
     var recetasFavoritas = mutableSetOf<Receta>()

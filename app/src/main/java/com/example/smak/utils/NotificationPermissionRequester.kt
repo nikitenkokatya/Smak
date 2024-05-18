@@ -16,11 +16,10 @@ class NotificationPermissionRequester(private val activity: ComponentActivity) {
             if (!isGranted) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                     if (Build.VERSION.SDK_INT >= 33) {
-                        //Caso de uso o apartado 5a del diagrama Android Developer. Comprobar que se muestra la opción PermissionRationale
                         if (activity.shouldShowRequestPermissionRationale((Manifest.permission.POST_NOTIFICATIONS))) //5b explicamos al usuario
                             showNotificationPermissionRationale()
                         else
-                            showSettingDialog() //Caso de uso o apartado 6 del diagrama Android Developer
+                            showSettingDialog()
 
                     }
 
@@ -30,11 +29,6 @@ class NotificationPermissionRequester(private val activity: ComponentActivity) {
             }
         }
 
-    /**
-     * Esta función muestra un cuadro de dialogo que permite al usuario aceptar o bien cancelar la opción de dar permisos.
-     * En el caso que el usuario acepte se abre la ventana de configuración de la aplicación
-     * donde el usuario debe seleccionar manualmente que permite las notificaciones a la app
-     */
     private fun showSettingDialog() {
         MaterialAlertDialogBuilder(
             activity,
@@ -51,10 +45,6 @@ class NotificationPermissionRequester(private val activity: ComponentActivity) {
             .show()
     }
 
-    /**
-     * Esta función se ejecuta cuando el usuario ha rechazado por primera vez asignar el permiso de
-     * mostrar notificaciones al usuario
-     */
     private fun showNotificationPermissionRationale() {
 
         MaterialAlertDialogBuilder(
@@ -68,14 +58,10 @@ class NotificationPermissionRequester(private val activity: ComponentActivity) {
                     requestPermissionLauncher?.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
-            //Si cancela en nuestro código se mostrará siempre showSettingDialog
             .setNegativeButton("Cancel", null)
             .show()
     }
 
-    /**
-     * Función que solicita el permiso para crear notificaciones
-     */
     fun tryRequest() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
         return requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)

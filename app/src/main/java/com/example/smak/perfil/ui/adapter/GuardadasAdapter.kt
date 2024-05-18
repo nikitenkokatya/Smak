@@ -9,8 +9,7 @@ import com.example.smak.data.Receta
 import com.example.smak.databinding.PerfilLayoutBinding
 
 class GuardadasAdapter(private val listener: onClickGuardadas): ListAdapter<Receta, GuardadasViewHolder>(
-    GUARDAR_COMPARATOR
-) {
+    GUARDAR_COMPARATOR) {
 
     interface onClickGuardadas {
         fun onClickDetails(receta: Receta)

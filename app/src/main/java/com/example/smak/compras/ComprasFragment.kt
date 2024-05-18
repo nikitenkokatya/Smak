@@ -1,6 +1,5 @@
 package com.example.smak.compras
 
-
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Bundle
@@ -31,7 +30,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.lang.Exception
 
-
 class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
     private var _binding: FragmentComprasBinding? = null
     private val binding get() = _binding!!
@@ -57,9 +55,7 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         initrv()
-
 
         binding.btnguardarCompra.setOnClickListener {
             mostrarDialogoAgregarIngrediente()
@@ -70,9 +66,7 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
             ingredientesAdapter.submitList(listaIngredientes)
         })
 
-
         listviewmodel.obtenerIngredientes()
-
 
         listviewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
             when (state) {
@@ -81,7 +75,6 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
             }
         })
 
-
         viewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 ComprasCreateState.NombreEmptyError -> mostrarMensajeError("Nombre de ingrediente vacío")
@@ -89,7 +82,6 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
                 is ComprasCreateState.Error -> mostrarMensajeError("Error al agregar ingrediente: ${state.ex.message}")
             }
         })
-
 
         val callback = SimpleItemTouchHelperCallback(ingredientesAdapter)
         val touchHelper = ItemTouchHelper(callback)
@@ -101,7 +93,6 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
         binding.rvcompras.visibility = GONE
     }
 
-
     private fun mostrarMensajeError(mensaje: String) {
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
     }
@@ -111,7 +102,6 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
         binding.rvcompras.layoutManager = LinearLayoutManager(requireContext())
         binding.rvcompras.adapter = ingredientesAdapter
     }
-
 
     fun onNombreEmpty() {
 
@@ -144,7 +134,6 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
 
     }
 
-
     @SuppressLint("MissingInflatedId")
     private fun mostrarDialogoAgregarIngrediente() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_agregar_ingrediente, null)
@@ -167,12 +156,10 @@ class ComprasFragment : Fragment(), ComprasAdapter.onClickListener {
             .show()
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
     override fun onClickDelete(compras: Compras): Boolean {
         listviewmodel.borrarIngrediente(compras)

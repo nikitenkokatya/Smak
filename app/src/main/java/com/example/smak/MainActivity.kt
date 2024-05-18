@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
         navController.addOnDestinationChangedListener(this)
 
-        // Configurar el primer destino
         navController.navigate(R.id.welcomeFragment)
 
         appBarConfiguration = AppBarConfiguration.Builder(topLevelDestinations)

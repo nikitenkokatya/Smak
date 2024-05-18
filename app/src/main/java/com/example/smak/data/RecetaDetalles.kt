@@ -16,6 +16,6 @@ data class Ingredient(
 )
 
 interface RecipeApi {
-    @GET("garlicky-kale-644387") // Ruta de la receta en la API
+    @GET("garlicky-kale-644387")
     fun getRecipe(): Call<RecetaDetalles>
 }

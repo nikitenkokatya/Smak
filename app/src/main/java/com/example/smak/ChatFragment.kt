@@ -44,14 +44,11 @@ import com.google.firebase.database.FirebaseDatabase
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
-        // Inicializar Firebase
         database = FirebaseDatabase.getInstance().reference
         currentUser = FirebaseAuth.getInstance().currentUser!!
 
-        // Escuchar mensajes
         listenForMessages()
 
-        // Configurar botón de enviar mensaje
         binding.sendButton.setOnClickListener {
             val messageText = binding.messageEditText.text.toString().trim()
             if (messageText.isNotEmpty()) {
@@ -66,13 +63,11 @@ import com.google.firebase.database.FirebaseDatabase
         _binding = null
     }
 
-    // Función para enviar un mensaje
     private fun sendMessage(senderId: String, messageText: String) {
         val message = Message(senderId, messageText)
         database.child("chats").push().setValue(message)
     }
 
-    // Función para escuchar mensajes en tiempo real
     private fun listenForMessages() {
         database.child("chats").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -94,7 +89,7 @@ import com.google.firebase.database.FirebaseDatabase
     }
 }
 data class Message(val senderId: String, val messageText: String) {
-    constructor() : this("", "") // Constructor vacío necesario para Firebase
+    constructor() : this("", "")
 }
 
 class ChatAdapter : RecyclerView.Adapter<ChatAdapter.MessageViewHolder>() {
@@ -201,7 +196,7 @@ class ChatFragment : Fragment() {
 }
 
 data class Message(val senderId: String, val recipientId: String, val messageText: String) {
-    constructor() : this("", "", "") // Constructor vacío necesario para Firebase
+    constructor() : this("", "", "")
 }
 
 class ChatAdapter : RecyclerView.Adapter<ChatAdapter.MessageViewHolder>() {

@@ -238,8 +238,6 @@ class LogInFragment : Fragment() {
         }
     }
 
-
-
     private fun navigateToMainActivity() {
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
@@ -257,7 +255,6 @@ class LogInFragment : Fragment() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -7,12 +7,6 @@
         android:summary="@string/summary_account"
         android:title="@string/title_account_setting" />
 
-    <Preference
-        android:icon="@drawable/ic_person"
-        android:key="@string/key_sort"
-        android:summary="@string/summary_sort"
-        android:title="@string/title_sort_setting" />
-
     <PreferenceCategory android:title="@string/category_notification"
         android:icon="@drawable/ic_buscar">
         <SwitchPreference
@@ -21,14 +15,6 @@
             android:defaultValue="false"
             android:key="@string/key_active_notifications"
             android:title="@string/title_active_notifications" />
-        <ListPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="1"
-            android:entries="@array/ringtone_entries"
-            android:entryValues="@array/ringtone_values"
-            android:key="@string/key_ringtone"
-            android:title="@string/title_ringtone" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/category_misc">

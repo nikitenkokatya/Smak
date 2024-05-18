@@ -18,8 +18,7 @@ class BaseFragmentDialog() : DialogFragment() {
         builder.setMessage(message)
         builder.setPositiveButton(
             R.string.ok
-        ) { _, _ -> //Una de las claves para realizar la comunicación entre fragmentos (padre-hijo) es utilizar los métodos
-            // supportFragmentManager de la actividad para realizar el intercambio de información.
+        ) { _, _ ->
             val bundle = Bundle()
             bundle.putBoolean(result, true)
             requireActivity().supportFragmentManager.setFragmentResult(request, bundle)
@@ -37,8 +36,6 @@ class BaseFragmentDialog() : DialogFragment() {
         const val message = "message"
         const val request = "request"
         const val result = "result"
-
-        // Método de fábrica para crear una instancia de BaseFragmentDialog con argumentos
         fun newInstance(title: String, message: String): BaseFragmentDialog {
             val fragment = BaseFragmentDialog()
             val args = Bundle()

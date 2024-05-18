@@ -38,7 +38,6 @@ class CreateFragment : Fragment() {
     private val viewmodel: CreateViewModel by viewModels()
     lateinit var txtWatcher: LogInTetxWatcher
 
-
     private lateinit var photoAdapter: PhotoAdapter
     private val selectedPhotos = mutableListOf<String>()
 
@@ -82,7 +81,7 @@ class CreateFragment : Fragment() {
         }
 
 
-        val tipos = arrayOf("Pescado", "Carne", "Postre", "Desayuno")
+        val tipos = arrayOf("Desayuno", "Almuerzo", "Cena", "Postre" )
         val adapterTipos = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tipos)
         adapterTipos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.sptipo.adapter = adapterTipos
@@ -211,7 +210,6 @@ class CreateFragment : Fragment() {
 
                     if (uri != null) {
                         val base64 = obtenerBase64DesdeUri(requireContext(), uri)
-                        //selectedPhotos.clear()
                         selectedPhotos.add(base64)
 
                         base64.let {
@@ -224,7 +222,6 @@ class CreateFragment : Fragment() {
 
                 REQUEST_CODE_SELECCION_VARIAS_IMAGENES -> {
                     data?.clipData?.let { clipData ->
-                        //selectedPhotos.clear()
                         for (i in 0 until clipData.itemCount) {
                             val uri = clipData.getItemAt(i).uri
                             val base64 = obtenerBase64DesdeUri(requireContext(), uri)
@@ -235,7 +232,6 @@ class CreateFragment : Fragment() {
                                 viewmodel.addImage(it)
                             }
                         }
-
                         photoAdapter.notifyDataSetChanged()
                     }
                 }

@@ -4,11 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.smak.data.Receta
 import com.example.smak.data.RecetaAPI
 import com.example.smak.databinding.ItemBusquedaBinding
-import com.example.smak.databinding.ItemLayoutBinding
-import com.example.smak.ui.adapter.RecetaViewHolder
 
 class BusquedaAdapter ( private val recipeList: List<RecetaAPI>, private val listener: onClick): ListAdapter<RecetaAPI, BusquedaViewHolder>(RECETA_COMPARATOR) {
     interface onClick {
@@ -27,9 +24,7 @@ class BusquedaAdapter ( private val recipeList: List<RecetaAPI>, private val lis
         holder.binding.clItem.setOnClickListener() { _ ->
             listener.onClickDetails(item)
         }
-
     }
-
 
     companion object {
         val RECETA_COMPARATOR = object : DiffUtil.ItemCallback<RecetaAPI>() {
