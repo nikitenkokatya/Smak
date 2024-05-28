@@ -7,7 +7,7 @@ import com.example.smak.R
 import com.example.smak.data.Receta
 import com.example.smak.databinding.ItemLayoutBinding
 
-class RecetaViewHolder(val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root),
+class RecetaViewHolder(val binding: ItemLayoutBinding, private val listener: RecetaAdapter.onClick) : RecyclerView.ViewHolder(binding.root),
     PhotoListAdapter.OnItemChangedListener {
     fun bind(item: Receta, rvFotos: RecyclerView) {
         binding.txtnombrereceta.text = item.nombre
@@ -25,6 +25,10 @@ class RecetaViewHolder(val binding: ItemLayoutBinding) : RecyclerView.ViewHolder
         adapter.setRecyclerView(rvFotos)
 
         adapter.setOnItemChangedListener(this)
+
+        binding.btnComment.setOnClickListener {
+            listener.onCommentButtonClick(item)
+        }
     }
 
     override fun onItemChanged(position: Int, listSize: Int) {

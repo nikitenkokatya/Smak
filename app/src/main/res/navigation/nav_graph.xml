@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_smakFragment_to_fragmentProgressDialog"
             app:destination="@id/fragmentProgressDialog" />
+        <action
+            android:id="@+id/action_smakFragment_to_comentariosFragment"
+            app:destination="@id/comentariosFragment" />
     </fragment>
     <fragment
         android:id="@+id/buscadorFragment2"
@@ -114,7 +117,7 @@
     <fragment
         android:id="@+id/recetPasswordFragment"
         android:name="com.example.smak.infrastructure.firebase.RecetPasswordFragment"
-        android:label="RecetPasswordFragment" >
+        android:label="" >
         <action
             android:id="@+id/action_recetPasswordFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
@@ -130,7 +133,15 @@
     <fragment
         android:id="@+id/apiDetailFragment"
         android:name="com.example.smak.buscar.ApiDetailFragment"
-        android:label="ApiDetailFragment" />
+        android:label="Receta" />
+    <fragment
+        android:id="@+id/comentariosFragment"
+        android:name="com.example.smak.ComentariosFragment"
+        android:label="ComentariosFragment" >
+        <action
+            android:id="@+id/action_comentariosFragment_to_smakFragment"
+            app:destination="@id/smakFragment" />
+    </fragment>
 </navigation>
 
 

@@ -14,10 +14,12 @@ class RecetaAdapter( private val listener: onClick):ListAdapter<Receta, RecetaVi
     interface onClick {
         fun onClickDetails(receta: Receta)
         fun userOnLongClick(receta: Receta): Boolean
+        fun onCommentButtonClick(receta: Receta)
+
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecetaViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return  RecetaViewHolder(ItemLayoutBinding.inflate(layoutInflater, parent, false))
+        return  RecetaViewHolder(ItemLayoutBinding.inflate(layoutInflater, parent, false), listener)
     }
 
     override fun onBindViewHolder(holder: RecetaViewHolder, position: Int) {

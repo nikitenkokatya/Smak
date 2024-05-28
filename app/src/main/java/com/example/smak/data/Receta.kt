@@ -5,7 +5,9 @@ import android.os.Parcelable
 
 data class Receta(
     var nombre:String, var ingredientes:String,
-    var pasos:String, var duracion:String, var tipo:String, var autor:String, var imagenes: MutableList<String> = mutableListOf()
+    var pasos:String, var duracion:String, var tipo:String, var autor:String,
+    var imagenes: MutableList<String> = mutableListOf(),
+    val comentarios: MutableList<Comentario> = mutableListOf()
 ):Parcelable {
     val id:Int = 0
     companion object {

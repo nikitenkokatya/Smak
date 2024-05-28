@@ -6,44 +6,45 @@ import android.os.Parcelable
 
 @SuppressLint("ParcelCreator")
 data class RecetaAPIDetails(
-    val vegetarian: Boolean,
-    val vegan: Boolean,
-    val glutenFree: Boolean,
-    val dairyFree: Boolean,
-    val veryHealthy: Boolean,
-    val cheap: Boolean,
-    val veryPopular: Boolean,
-    val sustainable: Boolean,
-    val lowFodmap: Boolean,
-    val weightWatcherSmartPoints: Int,
-    val gaps: String,
-    val preparationMinutes: Int,
-    val cookingMinutes: Int,
-    val aggregateLikes: Int,
-    val healthScore: Int,
-    val creditsText: String,
-    val sourceName: String,
-    val pricePerServing: Double,
-    val extendedIngredients: List<ExtendedIngredient>,
-    val id: Int,
-    val title: String,
-    val readyInMinutes: Int,
-    val servings: Int,
-    val sourceUrl: String,
-    val image: String,
-    val imageType: String,
-    val taste: Taste,
-    val summary: String,
-    val cuisines: List<String>,
-    val dishTypes: List<String>,
-    val diets: List<String>,
-    val occasions: List<String>,
-    val winePairing: WinePairing,
-    val instructions: String,
-    val analyzedInstructions: List<AnalyzedInstruction>,
-    val spoonacularScore: Double,
-    val spoonacularSourceUrl: String
-): Parcelable {
+    val vegetarian: Boolean = false,
+    val vegan: Boolean = false,
+    val glutenFree: Boolean = false,
+    val dairyFree: Boolean = false,
+    val veryHealthy: Boolean = false,
+    val cheap: Boolean = false,
+    val veryPopular: Boolean = false,
+    val sustainable: Boolean = false,
+    val lowFodmap: Boolean = false,
+    val weightWatcherSmartPoints: Int = 0,
+    val gaps: String = "",
+    val preparationMinutes: Int = 0,
+    val cookingMinutes: Int = 0,
+    val aggregateLikes: Int = 0,
+    val healthScore: Int = 0,
+    val creditsText: String = "",
+    val sourceName: String = "",
+    val pricePerServing: Double = 0.0,
+    val extendedIngredients: List<ExtendedIngredient> = emptyList(),
+    val id: Int = 0,
+    var title: String = "",
+    val readyInMinutes: Int = 0,
+    val servings: Int = 0,
+    val sourceUrl: String = "",
+    val image: String = "",
+    val imageType: String = "",
+    val taste: Taste = Taste(),
+    val summary: String = "",
+    val cuisines: List<String> = emptyList(),
+    val dishTypes: List<String> = emptyList(),
+    val diets: List<String> = emptyList(),
+    val occasions: List<String> = emptyList(),
+    val winePairing: WinePairing = WinePairing(),
+    val instructions: String = "",
+    val analyzedInstructions: List<AnalyzedInstruction> = emptyList(),
+    val spoonacularScore: Double = 0.0,
+    val spoonacularSourceUrl: String = ""
+)
+: Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
@@ -142,17 +143,17 @@ data class RecetaAPIDetails(
 
 data class ExtendedIngredient(
     val id: Int,
-    val aisle: String,
-    val image: String,
-    val consistency: String,
-    val name: String,
-    val nameClean: String,
-    val original: String,
-    val originalName: String,
+    val aisle: String?,
+    val image: String?,
+    val consistency: String?,
+    val name: String?,
+    val nameClean: String?,
+    val original: String?,
+    val originalName: String?,
     val amount: Double,
-    val unit: String,
-    val meta: List<String>,
-    val measures: Measures
+    val unit: String?,
+    val meta: List<String>?,
+    val measures: Measures?
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -282,6 +283,8 @@ data class Taste(
     ) {
     }
 
+    constructor() : this(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeDouble(sweetness)
         parcel.writeDouble(saltiness)
@@ -314,6 +317,8 @@ data class WinePairing(
         parcel.readString()!!
     ) {
     }
+
+    constructor() : this("")
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(pairingText)

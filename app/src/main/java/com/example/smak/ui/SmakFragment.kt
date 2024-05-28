@@ -96,4 +96,11 @@ class SmakFragment : Fragment(), RecetaAdapter.onClick{
     override fun userOnLongClick(receta: Receta): Boolean {
         return true
     }
+
+    override fun onCommentButtonClick(receta: Receta) {
+        var bundle = Bundle()
+        bundle.putParcelable(Receta.TAG, receta)
+
+        findNavController().navigate(R.id.action_smakFragment_to_comentariosFragment, bundle)
+    }
 }
