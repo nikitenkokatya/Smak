@@ -26,8 +26,6 @@ import com.example.smak.databinding.FragmentApiDetailBinding
 class ApiDetailFragment : Fragment(), MenuProvider {
     private var _binding: FragmentApiDetailBinding? = null
     private val binding get() = _binding!!
-    //private val viewmodel: GuardadasViewModel by viewModels()
-    //private lateinit var saveMenuItem: MenuItem
     private lateinit var saveMenuItem: MenuItem
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

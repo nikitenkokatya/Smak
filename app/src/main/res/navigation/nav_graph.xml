@@ -91,7 +91,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.smak.DetailFragment"
+        android:name="com.example.smak.ui.DetailFragment"
         android:label="Receta"
         tools:layout="@layout/fragment_detail" >
         <action

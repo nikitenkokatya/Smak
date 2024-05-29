@@ -1,8 +1,6 @@
 package com.example.smak.api
 
 import okhttp3.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 class SpoonacularApiClient {
@@ -46,17 +44,6 @@ class SpoonacularApiClient {
 
     private val BASE_URL = "https://spoonacular.com/recipes/"
 
-    private var retrofit: Retrofit? = null
-
-    fun getClient(): Retrofit {
-        if (retrofit == null) {
-            retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        }
-        return retrofit!!
-    }
 }
 
 

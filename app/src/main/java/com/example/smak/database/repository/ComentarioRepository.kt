@@ -8,31 +8,26 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class ComentarioRepository {
-
     companion object {
         private val db = FirebaseFirestore.getInstance()
 
         suspend fun getComentarios(recetaNombre: String): Resource {
             return try {
-                // Asegúrate de que la referencia al documento tenga un número par de segmentos
                 val documentRef = db.collection("recetas").document(recetaNombre)
                 val querySnapshot = documentRef.collection("comentarios").get().await()
                 val comentarios = querySnapshot.documents.mapNotNull { it.toObject(Comentario::class.java) }
                 Resource.Success(comentarios)
             } catch (e: Exception) {
-                Log.e("ComentarioRepository", "Error al obtener comentarios: ${e.message}", e)
                 Resource.Error(Exception("Error al obtener comentarios: ${e.message}"))
             }
         }
 
         suspend fun agregarComentario(recetaNombre: String, comentario: Comentario): Resource {
             return try {
-                // Asegúrate de que la referencia al documento tenga un número par de segmentos
                 val documentRef = db.collection("recetas").document(recetaNombre)
                 documentRef.collection("comentarios").add(comentario).await()
                 Resource.Success("Comentario agregado")
             } catch (e: Exception) {
-                Log.e("ComentarioRepository", "Error al agregar comentario: ${e.message}", e)
                 Resource.Error(Exception("Error al agregar comentario: ${e.message}"))
             }
         }

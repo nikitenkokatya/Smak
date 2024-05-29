@@ -30,6 +30,10 @@ import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class ComentariosFragment : Fragment() {
     private var _binding: FragmentComentariosBinding? = null
@@ -115,13 +119,13 @@ class ComentariosAdapter (): ListAdapter<Comentario, ComentarioViewHolder>(COMEN
             }
         }
     }
-
 }
 
 class ComentarioViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(comentario: Comentario) {
         binding.senderTextView.text = comentario.autor
         binding.messageTextView.text = comentario.contenido
+        binding.txtfecha.text = comentario.fecha
     }
 }
 
@@ -142,9 +146,7 @@ class ComentariosViewModel : ViewModel() {
             val result = ComentarioRepository.getComentarios(recetaNombre)
             if (result is Resource.Success<*>) {
                 _comentarios.value = result.data as List<Comentario>
-                Log.d("ComentariosViewModel", "Comentarios cargados: ${result.data.size}")
             } else {
-                Log.e("ComentariosViewModel", "Error al cargar comentarios")
             }
             _loading.value = false
         }
@@ -152,13 +154,14 @@ class ComentariosViewModel : ViewModel() {
 
     fun sendMessage(recetaNombre: String, autor: String, contenido: String) {
         viewModelScope.launch {
-            val comentario = Comentario(autor, contenido, System.currentTimeMillis().toString())
+            val currentMillis = System.currentTimeMillis()
+            val currentDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(currentMillis), ZoneId.systemDefault())
+            val formattedDateTime = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            val comentario = Comentario(autor, contenido, formattedDateTime)
             val result = ComentarioRepository.agregarComentario(recetaNombre, comentario)
             if (result is Resource.Success<*>) {
                 loadComentarios(recetaNombre)
-                Log.d("ComentariosViewModel", "Comentario agregado: $contenido")
             } else {
-                Log.e("ComentariosViewModel", "Error al agregar comentario")
             }
         }
     }

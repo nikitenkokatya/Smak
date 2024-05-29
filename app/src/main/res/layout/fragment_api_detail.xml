@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".DetailFragment">
+            tools:context=".ui.DetailFragment">
 
             <ImageView
                 android:id="@+id/imgfotodetail"
