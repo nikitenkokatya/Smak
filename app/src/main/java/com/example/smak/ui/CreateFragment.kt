@@ -3,6 +3,8 @@ package com.example.smak.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -244,21 +246,57 @@ class CreateFragment : Fragment() {
         var inputStream: InputStream? = null
         try {
             inputStream = context.contentResolver.openInputStream(uri)
-            val buffer = ByteArrayOutputStream()
-            val bufferSize = 1024
-            val bufferArray = ByteArray(bufferSize)
-            var len: Int
-            while (inputStream!!.read(bufferArray).also { len = it } != -1) {
-                buffer.write(bufferArray, 0, len)
-            }
-            val data = buffer.toByteArray()
-            base64String = Base64.encodeToString(data, Base64.NO_WRAP)
+
+            // Decodificar la imagen en un Bitmap
+            val options = BitmapFactory.Options()
+            options.inSampleSize = calcularSampleSize(context, uri)
+            val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+
+            // Convertir el Bitmap en un array de bytes
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream) // Ajusta la calidad según sea necesario
+            val byteArray = byteArrayOutputStream.toByteArray()
+
+            // Convertir el array de bytes en una cadena base64
+            base64String = Base64.encodeToString(byteArray, Base64.NO_WRAP)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
             inputStream?.close()
         }
-        return base64String!!
+        return base64String ?: ""
+    }
+
+    fun calcularSampleSize(context: Context, uri: Uri): Int {
+        var inputStream: InputStream? = null
+        try {
+            inputStream = context.contentResolver.openInputStream(uri)
+
+            // Solo necesitamos la dimensión de la imagen para calcular el Sample Size
+            val options = BitmapFactory.Options().apply {
+                inJustDecodeBounds = true
+            }
+            BitmapFactory.decodeStream(inputStream, null, options)
+            val width = options.outWidth
+            val height = options.outHeight
+            var inSampleSize = 1
+
+            // Calcular el Sample Size
+            if (width > 1024 || height > 1024) { // Ajusta estos valores según tus necesidades
+                val halfWidth = width / 2
+                val halfHeight = height / 2
+                while ((halfWidth / inSampleSize) >= 1024 && (halfHeight / inSampleSize) >= 1024) {
+                    inSampleSize *= 2
+                }
+            }
+
+            return inSampleSize
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            inputStream?.close()
+        }
+        return 1
     }
 
     companion object {

@@ -12,17 +12,16 @@ class RecetaRepository  {
         private val db = FirebaseFirestore.getInstance()
         private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-        fun agregarReceta(receta: Receta): Resource {
+        suspend fun agregarReceta(receta: Receta): Resource {
             return try {
                 val currentUser = FirebaseAuth.getInstance().currentUser
-                val autor = currentUser?.email
+                val autor = obtenerNombreAutor()
 
                 agregarRecetaParaTodos(receta)
 
-                if (autor != null) {
-                    Log.d("RecetaRepository", "Agregar receta al perfil del usuario")
+
                     agregarRecetaAlPerfilUsuario(receta, autor)
-                }
+
 
                 val nuevaRecetaConAutor = autor?.let { receta.copy(autor = it) }
                 Resource.Success(nuevaRecetaConAutor)
@@ -30,11 +29,23 @@ class RecetaRepository  {
                 Resource.Error(e)
             }
         }
+        suspend fun obtenerNombreAutor(): String {
+            val currentUser = auth.currentUser
+            val email = currentUser?.email ?: return "Unknown"
 
-        fun agregarRecetaParaTodos(receta: Receta): Resource {
+            val perfilRepository = PerfilRepository()
+            return try {
+                val perfil = perfilRepository.getPerfilSuspend(email)
+                perfil?.nombre ?: email.substringBefore("@")
+            } catch (e: Exception) {
+                email.substringBefore("@")
+            }
+        }
+
+        suspend fun agregarRecetaParaTodos(receta: Receta): Resource {
             return try {
                 val currentUser = FirebaseAuth.getInstance().currentUser
-                val autor = currentUser?.email
+                val autor = obtenerNombreAutor()
                 Log.d("RecetaRepository", "Agregar receta para todos los usuarios")
 
                 if (autor != null) {

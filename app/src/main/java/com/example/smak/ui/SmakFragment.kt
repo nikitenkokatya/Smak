@@ -1,6 +1,8 @@
 package com.example.smak.ui
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.service.voice.VoiceInteractionSession.VisibleActivityCallback
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -53,6 +57,7 @@ class SmakFragment : Fragment(), RecetaAdapter.onClick{
         }
 
         viewmodel.getAllRecetas()
+
     }
 
     override fun onResume() {

@@ -83,6 +83,6 @@ dependencies {
 
     implementation ("com.google.firebase:firebase-storage-ktx")
 
-   // implementation ("com.google.cloud:google-cloud-translate:1.95.3")
+    // implementation ("com.google.cloud:google-cloud-translate:1.95.3")
 
 }

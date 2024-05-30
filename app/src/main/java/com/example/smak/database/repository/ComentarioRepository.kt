@@ -25,7 +25,13 @@ class ComentarioRepository {
         suspend fun agregarComentario(recetaNombre: String, comentario: Comentario): Resource {
             return try {
                 val documentRef = db.collection("recetas").document(recetaNombre)
-                documentRef.collection("comentarios").add(comentario).await()
+                val comentarioData = hashMapOf(
+                    "autor" to comentario.autor,
+                    "contenido" to comentario.contenido,
+                    "fecha" to comentario.fecha,
+                    "estrellas" to comentario.estrellas  // Incluye el valor de las estrellas en los datos del comentario
+                )
+                documentRef.collection("comentarios").add(comentarioData).await() // Guarda los datos del comentario en Firestore
                 Resource.Success("Comentario agregado")
             } catch (e: Exception) {
                 Resource.Error(Exception("Error al agregar comentario: ${e.message}"))

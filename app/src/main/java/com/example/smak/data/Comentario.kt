@@ -6,18 +6,22 @@ import android.os.Parcelable
 data class Comentario(
     val autor: String = "",
     val contenido: String = "",
-    val fecha: String = ""
+    val fecha: String = "",
+    val estrellas :Float = 0.0F
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readString() ?: ""
+        parcel.readString() ?: "",
+        parcel.readFloat()
+
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(autor)
         parcel.writeString(contenido)
         parcel.writeString(fecha)
+        parcel.writeFloat(estrellas)
     }
 
     override fun describeContents(): Int {

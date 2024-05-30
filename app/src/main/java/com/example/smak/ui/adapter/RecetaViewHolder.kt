@@ -11,7 +11,7 @@ class RecetaViewHolder(val binding: ItemLayoutBinding, private val listener: Rec
     PhotoListAdapter.OnItemChangedListener {
     fun bind(item: Receta, rvFotos: RecyclerView) {
         binding.txtnombrereceta.text = item.nombre
-        binding.txtautor.text = "by " + item.autor
+        binding.txtautor.text = "by " +item.autor
 
         val adapter = PhotoListAdapter(item.imagenes)
 

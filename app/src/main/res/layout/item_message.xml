@@ -37,4 +37,19 @@
         app:layout_constraintStart_toEndOf="@+id/senderTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <RatingBar
+        android:id="@+id/estrellas"
+        android:layout_width="238dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginTop="16dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="0"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:stepSize="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

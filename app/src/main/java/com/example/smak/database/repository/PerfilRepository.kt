@@ -4,6 +4,7 @@ import com.example.smak.data.Perfil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.tasks.await
 
 class PerfilRepository {
     private val db = FirebaseFirestore.getInstance()
@@ -45,5 +46,27 @@ class PerfilRepository {
         db.collection("users").document(autor!!).collection("perfil")
             .document(autor)
             .set(perfilHashmap)
+    }
+
+
+    suspend fun getPerfilSuspend(userEmail: String): Perfil? {
+        return try {
+            val documentSnapshot = db.collection("users")
+                .document(userEmail)
+                .collection("perfil")
+                .document(userEmail)
+                .get()
+                .await()
+
+            if (documentSnapshot.exists()) {
+                val nombre = documentSnapshot.getString("userName")
+                val foto = documentSnapshot.getString("foto")
+                Perfil(nombre, foto)
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
 }

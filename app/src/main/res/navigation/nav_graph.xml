@@ -137,7 +137,7 @@
     <fragment
         android:id="@+id/comentariosFragment"
         android:name="com.example.smak.ComentariosFragment"
-        android:label="ComentariosFragment" >
+        android:label="Comentarios" >
         <action
             android:id="@+id/action_comentariosFragment_to_smakFragment"
             app:destination="@id/smakFragment" />
