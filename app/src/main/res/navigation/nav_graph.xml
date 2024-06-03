@@ -44,15 +44,7 @@
             android:id="@+id/action_smakFragment_to_comentariosFragment"
             app:destination="@id/comentariosFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/buscadorFragment2"
-        android:name="com.example.smak.buscar.BuscadorFragment"
-        android:label="Buscar"
-        tools:layout="@layout/fragment_buscador" >
-        <action
-            android:id="@+id/action_buscadorFragment2_to_apiDetailFragment"
-            app:destination="@id/apiDetailFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/createFragment2"
         android:name="com.example.smak.ui.CreateFragment"
@@ -103,6 +95,9 @@
         <action
             android:id="@+id/action_detailFragment_to_buscadorFragment2"
             app:destination="@id/buscadorFragment2" />
+        <action
+            android:id="@+id/action_detailFragment_to_personaFragment"
+            app:destination="@id/personaFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -141,7 +136,46 @@
         <action
             android:id="@+id/action_comentariosFragment_to_smakFragment"
             app:destination="@id/smakFragment" />
+        <action
+            android:id="@+id/action_comentariosFragment_to_personaFragment"
+            app:destination="@id/personaFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/tipoFragment"
+        android:name="com.example.smak.TipoFragment"
+        android:label="TipoFragment" >
+        <action
+            android:id="@+id/action_tipoFragment_to_buscadorFragment2"
+            app:destination="@id/buscadorFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/buscadorFragment2"
+        android:name="com.example.smak.buscar.BuscadorFragment"
+        android:label="Buscar"
+        tools:layout="@layout/fragment_buscador" >
+        <action
+            android:id="@+id/action_buscadorFragment2_to_apiDetailFragment"
+            app:destination="@id/apiDetailFragment" />
+        <action
+            android:id="@+id/action_buscadorFragment2_to_tipoFragment"
+            app:destination="@id/tipoFragment" />
+        <action
+            android:id="@+id/action_buscadorFragment2_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personaFragment"
+        android:name="com.example.smak.PersonaFragment"
+        android:label="PersonaFragment" >
+        <action
+            android:id="@+id/action_personaFragment_to_comentariosFragment"
+            app:destination="@id/comentariosFragment" />
+        <action
+            android:id="@+id/action_personaFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
 </navigation>
 
 

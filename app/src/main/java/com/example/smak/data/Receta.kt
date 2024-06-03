@@ -4,12 +4,20 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Receta(
-    var nombre:String, var ingredientes:String,
-    var pasos:String, var duracion:String, var tipo:String, var autor:String,
+    var nombre: String = "",
+    var ingredientes: String = "",
+    var pasos: String = "",
+    var duracion: String = "",
+    var tipo: String = "",
+    var autor: String = "",
     var imagenes: MutableList<String> = mutableListOf(),
     val comentarios: MutableList<Comentario> = mutableListOf()
-):Parcelable {
-    val id:Int = 0
+):Parcelable , RecetaItem {
+    override val id: Int = 0 // O el ID adecuado si tienes uno
+    override val title: String
+    get() = nombre
+    override val image: String
+    get() = imagenes.firstOrNull() ?: ""
     companion object {
         const val TAG = "Receta"
 
@@ -32,7 +40,8 @@ data class Receta(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.createStringArrayList()!!.toMutableList()
+        parcel.createStringArrayList()!!.toMutableList(),
+        mutableListOf()
     )
 
     override fun describeContents(): Int {

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setSupportActionBar(binding.toolbar)
 
         topLevelDestinations = setOf(R.id.welcomeFragment, R.id.smakFragment,
-            R.id.buscadorFragment2, R.id.createFragment2, R.id.comprasFragment2, R.id.profileFragment2)
+            R.id.tipoFragment, R.id.createFragment2, R.id.comprasFragment2, R.id.profileFragment2)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> navController.navigate(R.id.smakFragment)
-                R.id.nav_buscador -> navController.navigate(R.id.buscadorFragment2)
+                R.id.nav_buscador -> navController.navigate(R.id.tipoFragment)
                 R.id.nav_crear -> navController.navigate(R.id.createFragment2)
                 R.id.nav_compras -> navController.navigate(R.id.comprasFragment2)
                 R.id.nav_profile -> navController.navigate(R.id.profileFragment2)

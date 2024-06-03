@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -23,6 +24,7 @@ import com.example.smak.database.repository.RecetaRepository
 import com.example.smak.database.resource.Resource
 import com.example.smak.databinding.FragmentComentariosBinding
 import com.example.smak.databinding.ItemMessageBinding
+import com.example.smak.ui.adapter.RecetaAdapter
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -30,7 +32,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class ComentariosFragment : Fragment() {
+class ComentariosFragment : Fragment(), ComentariosAdapter.onClick {
     private var _binding: FragmentComentariosBinding? = null
     private val binding get() = _binding!!
 
@@ -74,7 +76,7 @@ class ComentariosFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        adapter = ComentariosAdapter()
+        adapter = ComentariosAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
     }
@@ -83,9 +85,20 @@ class ComentariosFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onClickPersona(comentario: Comentario) {
+        val bundle = Bundle().apply {
+            putString("email", comentario.email)
+        }
+        findNavController().navigate(R.id.action_comentariosFragment_to_personaFragment, bundle)
+    }
 }
 
-class ComentariosAdapter (): ListAdapter<Comentario, ComentarioViewHolder>(COMENTARIO_COMPARATOR) {
+class ComentariosAdapter (private val listener: onClick): ListAdapter<Comentario, ComentarioViewHolder>(COMENTARIO_COMPARATOR) {
+    interface onClick {
+        fun onClickPersona(comentario: Comentario)
+
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComentarioViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return  ComentarioViewHolder(ItemMessageBinding.inflate(layoutInflater, parent, false))
@@ -95,6 +108,9 @@ class ComentariosAdapter (): ListAdapter<Comentario, ComentarioViewHolder>(COMEN
         val item = currentList[position]
         holder.bind(item)
 
+        holder.binding.root.setOnClickListener() { _ ->
+            listener.onClickPersona(item)
+        }
     }
 
     companion object {
@@ -152,7 +168,7 @@ class ComentariosViewModel : ViewModel() {
             val formattedDateTime = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             val autor = obtenerNombreAutor()
             if (autor != null) {
-                val comentario = Comentario(autor, contenido, formattedDateTime, estrellas) // Incluir estrellas en el objeto Comentario
+                val comentario = Comentario(autor, "", contenido, formattedDateTime, estrellas) // Incluir estrellas en el objeto Comentario
 
                 val result = ComentarioRepository.agregarComentario(recetaNombre, comentario)
                 if (result is Resource.Success<*>) {

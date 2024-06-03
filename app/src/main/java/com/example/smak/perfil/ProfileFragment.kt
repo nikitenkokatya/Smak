@@ -181,14 +181,14 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
                 )
             )
 
-            binding.textView.text = PerfilRepository.userPerfil!!.nombre
+            binding.txtnperson.text = PerfilRepository.userPerfil!!.nombre
         }, {
             // onFailure
             binding.imageView.setImageResource(R.drawable.user)
 
             val userEmail = user.email ?: ""
             val userNameBeforeAt = userEmail.substringBefore('@')
-            binding.textView.text = userNameBeforeAt
+            binding.txtnperson.text = userNameBeforeAt
         })
     }
 
@@ -323,11 +323,11 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
                     )
                 )
 
-                binding.textView.text = PerfilRepository.userPerfil!!.nombre
+                binding.txtnperson.text = PerfilRepository.userPerfil!!.nombre
             }, {
                 // onFailure
                 binding.imageView.setImageResource(R.drawable.user)
-                binding.textView.text = mAuth.currentUser!!.email!!
+                binding.txtnperson.text = mAuth.currentUser!!.email!!
             })
 
             dialog.dismiss()

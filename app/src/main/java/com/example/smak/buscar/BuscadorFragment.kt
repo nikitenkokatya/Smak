@@ -1,11 +1,7 @@
 package com.example.smak.buscar
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -16,30 +12,25 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smak.R
-import com.example.smak.api.SpoonacularApiClient
-import com.example.smak.buscar.adapter.BusquedaAdapter
-import com.example.smak.data.RecetaAPI
-import com.example.smak.data.RecetaAPIDetails
+import com.example.smak.data.Receta
 import com.example.smak.databinding.FragmentBuscadorBinding
-import com.example.smak.utils.ApiUtils
-import org.json.JSONObject
+import com.example.smak.ui.adapter.RecetaAdapter
+import com.example.smak.ui.usecase.ListState
+import com.example.smak.ui.usecase.ListViewModel
 import java.util.Locale
 
 
-class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
-
-    val apiKey = "cbac8ca59ade4d04b3bd2ab780365021"
-    val client = SpoonacularApiClient()
-
+class BuscadorFragment : Fragment(), RecetaAdapter.onClick {
     private var _binding: FragmentBuscadorBinding? = null
     private val binding get() = _binding!!
-    lateinit var recetaAdapter: BusquedaAdapter
-    private var recipeList: List<RecetaAPI> = emptyList()
+    lateinit var recetaAdapter: RecetaAdapter
     private lateinit var speechRecognizer: SpeechRecognizer
-
+    private val viewmodel: ListViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,52 +44,52 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
 
         initRV()
 
+        val tipo = arguments?.getString("tipo") ?: ""
+
+        viewmodel.recetas.observe(viewLifecycleOwner, Observer { recetas ->
+            recetaAdapter.submitList(recetas)
+        })
+
+        viewmodel.getState().observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ListState.Success -> onSuccess()
+                is ListState.Error -> onNoError()
+                is ListState.Loading -> showProgressBar(state.value)
+            }
+        }
+
         binding.srvbuscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    searchRecipes(it)
-                }
-
+                viewmodel.getAllRecetasTipo(tipo, newText ?: "")
                 return false
             }
         })
 
-        searchRecipes("")
+        viewmodel.getAllRecetasTipo(tipo, "")
 
         binding.btnAudio.setOnClickListener {
             Log.d("YourFragment", "Botón de audio clickeado")
             startVoiceInput()
         }
     }
+    private fun showProgressBar(value : Boolean){
 
-    fun searchRecipes(query: String) {
-
-        if (isConnectedToInternet())
-            client.searchRecipes(query, 50, apiKey) { response ->
-                val handler = Handler(Looper.getMainLooper())
-                handler.post {
-                    recipeList = parseJson(response!!)
-                    recetaAdapter.submitList(recipeList)
-                }
-            }
-        else
-            Toast.makeText(context, "No tienes conexión a internet", Toast.LENGTH_SHORT).show()
     }
-
-    fun isConnectedToInternet(): Boolean {
-        val connectivityManager =
-            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
-
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    fun onSuccess(){
+        //binding.imageView.visibility = GONE
+        binding.rvbusqueda.visibility = View.VISIBLE
+    }
+    fun onNoError(){
+        //binding.imageView.visibility = VISIBLE
+        binding.rvbusqueda.visibility = View.GONE
     }
 
     fun initRV() {
-        recetaAdapter = BusquedaAdapter(recipeList, this)
+        recetaAdapter = RecetaAdapter( this)
         binding.rvbusqueda.layoutManager = LinearLayoutManager(requireContext())
         binding.rvbusqueda.adapter = recetaAdapter
     }
@@ -145,46 +136,18 @@ class BuscadorFragment : Fragment(), BusquedaAdapter.onClick {
         _binding = null
     }
 
-    fun parseJson(jsonString: String): List<RecetaAPI> {
-        val jsonObject = JSONObject(jsonString)
-        val jsonArray = jsonObject.getJSONArray("results")
-        val recipeList = mutableListOf<RecetaAPI>()
+    override fun onClickDetails(receta: Receta) {
+        var bundle = Bundle()
+        bundle.putParcelable(Receta.TAG, receta)
 
-        for (i in 0 until jsonArray.length()) {
-            val itemObject = jsonArray.getJSONObject(i)
-            val id = itemObject.getInt("id")
-            val title = itemObject.getString("title")
-            val image = itemObject.getString("image")
-
-            val recipe = RecetaAPI(id, title, image)
-            recipeList.add(recipe)
-        }
-        return recipeList
+        findNavController().navigate(R.id.action_buscadorFragment2_to_detailFragment, bundle)
     }
 
-    override fun onClickDetails(receta: RecetaAPI) {
-        client.getRecipeDetail(receta.id, apiKey) { response ->
-            val handler = Handler(Looper.getMainLooper())
-            handler.post {
-                val recetaApiDetails = ApiUtils.getResponseData(response, RecetaAPIDetails::class.java)
-
-                val bundle = Bundle()
-                bundle.putParcelable(RecetaAPIDetails.TAG, recetaApiDetails)
-
-                findNavController().navigate(R.id.action_buscadorFragment2_to_apiDetailFragment, bundle)
-            }
-        }
-    }
-
-    /*fun translateJson(jsonString: String): String {
-        val translatedText = translateString(jsonString, "en", "es")
-        return translatedText ?: jsonString
-    }
-
-    fun translateString(textToTranslate: String?, sourceLang: String, targetLang: String): String? {
-        return TraductorUtil().translateString(textToTranslate, sourceLang, targetLang)
-    }*/
-    override fun userOnLongClick(receta: RecetaAPI): Boolean {
+    override fun userOnLongClick(receta: Receta): Boolean {
         return true
+    }
+
+    override fun onCommentButtonClick(receta: Receta) {
+
     }
 }

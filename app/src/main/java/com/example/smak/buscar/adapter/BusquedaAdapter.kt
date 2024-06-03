@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.smak.data.RecetaAPI
+import com.example.smak.data.RecetaItem
 import com.example.smak.databinding.ItemBusquedaBinding
 
-class BusquedaAdapter ( private val recipeList: List<RecetaAPI>, private val listener: onClick): ListAdapter<RecetaAPI, BusquedaViewHolder>(RECETA_COMPARATOR) {
+class BusquedaAdapter ( private val recipeList: List<RecetaItem>, private val listener: onClick): ListAdapter<RecetaItem, BusquedaViewHolder>(RECETA_COMPARATOR) {
     interface onClick {
-        fun onClickDetails(receta: RecetaAPI)
-        fun userOnLongClick(receta: RecetaAPI): Boolean
+        fun onClickDetails(receta: RecetaItem)
+        fun userOnLongClick(receta: RecetaItem): Boolean
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusquedaViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -27,12 +28,12 @@ class BusquedaAdapter ( private val recipeList: List<RecetaAPI>, private val lis
     }
 
     companion object {
-        val RECETA_COMPARATOR = object : DiffUtil.ItemCallback<RecetaAPI>() {
-            override fun areItemsTheSame(oldItem: RecetaAPI, newItem: RecetaAPI): Boolean {
+        val RECETA_COMPARATOR = object : DiffUtil.ItemCallback<RecetaItem>() {
+            override fun areItemsTheSame(oldItem: RecetaItem, newItem: RecetaItem): Boolean {
                 return newItem == oldItem
             }
 
-            override fun areContentsTheSame(oldItem: RecetaAPI, newItem: RecetaAPI): Boolean {
+            override fun areContentsTheSame(oldItem: RecetaItem, newItem: RecetaItem): Boolean {
                 return newItem.id == oldItem.id
             }
         }

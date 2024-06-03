@@ -85,4 +85,7 @@ dependencies {
 
     // implementation ("com.google.cloud:google-cloud-translate:1.95.3")
 
+    implementation( "androidx.viewpager2:viewpager2:1.0.0")
+    implementation( "com.google.android.material:material:1.3.0")
+
 }

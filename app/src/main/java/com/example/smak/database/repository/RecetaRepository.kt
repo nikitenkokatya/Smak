@@ -15,13 +15,13 @@ class RecetaRepository  {
         suspend fun agregarReceta(receta: Receta): Resource {
             return try {
                 val currentUser = FirebaseAuth.getInstance().currentUser
-                val autor = obtenerNombreAutor()
+                val autor = currentUser?.email
 
                 agregarRecetaParaTodos(receta)
 
-
+                if (autor != null) {
                     agregarRecetaAlPerfilUsuario(receta, autor)
-
+                }
 
                 val nuevaRecetaConAutor = autor?.let { receta.copy(autor = it) }
                 Resource.Success(nuevaRecetaConAutor)
@@ -155,6 +155,29 @@ class RecetaRepository  {
                     }
             }
         }
+    }
+
+    fun getRecetasPrivadas(email: String, callback: (List<Receta>) -> Unit) {
+        db.collection("users").document(email).collection("privadas").get()
+            .addOnSuccessListener { documents ->
+                val recetasList = mutableListOf<Receta>()
+                for (document in documents) {
+                    val nombre = document.getString("nombre") ?: ""
+                    val ingredientes = document.getString("ingredientes") ?: ""
+                    val pasos = document.getString("pasos") ?: ""
+                    val duracion = document.getString("duracion") ?: ""
+                    val tipo = document.getString("tipo") ?: ""
+                    val autor = document.getString("autor") ?: ""
+                    val imagenesList = document.get("imagenes") as? List<String> ?: emptyList()
+                    val receta = Receta(nombre, ingredientes, pasos, duracion, tipo, autor, imagenesList.toMutableList())
+                    recetasList.add(receta)
+                }
+                callback(recetasList)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("RecetaRepository", "Error al obtener recetas privadas: ${exception.message}")
+                callback(emptyList())
+            }
     }
     fun borrarMiReceta(receta: Receta) {
         val currentUser = auth.currentUser

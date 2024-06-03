@@ -26,7 +26,7 @@ class PerfilRepository {
                     userPerfil = Perfil(nombre, foto)
                     onSuccess()
                 } else {
-                    onFailure()
+                    onSuccess()
                 }
             }
             .addOnFailureListener { exception ->

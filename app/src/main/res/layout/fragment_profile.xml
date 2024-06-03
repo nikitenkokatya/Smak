@@ -9,7 +9,7 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtnperson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
@@ -100,7 +100,9 @@
             android:id="@+id/btnnavigate"
             android:layout_width="410dp"
             android:layout_height="52dp"
-            app:labelVisibilityMode="unlabeled"
+            app:labelVisibilityMode="labeled"
+            app:itemTextAppearanceInactive="@style/BottomNavigationText"
+            app:itemTextAppearanceActive="@style/BottomNavigationText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
