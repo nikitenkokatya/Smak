@@ -1,12 +1,14 @@
 package com.example.smak.ui
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -30,6 +32,10 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.lang.Exception
 import android.util.Base64
+import androidx.navigation.fragment.findNavController
+import com.example.smak.perfil.ProfileFragment
+import com.example.smak.utils.createNotificationChannel
+import com.example.smak.utils.sendNotification
 
 
 class CreateFragment : Fragment() {
@@ -124,6 +130,7 @@ class CreateFragment : Fragment() {
         binding.rvImagenes.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         binding.rvImagenes.adapter = photoAdapter
     }
+
     fun onCodeError() {
         binding.tilnombre.error = "Introduce el codigo"
         binding.tilnombre.requestFocus()
@@ -160,6 +167,12 @@ class CreateFragment : Fragment() {
 
     fun onSuccess(receta: Receta) {
         Toast.makeText(requireContext(), "Receta guardada correctamente", Toast.LENGTH_SHORT).show()
+        findNavController().popBackStack()
+
+        val intent = Intent("com.example.receta")
+        intent.putExtra("nombre_receta", receta.nombre)
+        intent.putExtra("autor", receta.autor)
+        activity?.sendBroadcast(intent)
     }
 
 
@@ -174,14 +187,12 @@ class CreateFragment : Fragment() {
     }
 
     private fun abrirGaleriaParaUnaFoto() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "image/*"
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, REQUEST_CODE_SELECCION_UNA_IMAGEN)
     }
 
     private fun abrirGaleriaParaVariasFotos() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "image/*"
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         startActivityForResult(intent, REQUEST_CODE_SELECCION_VARIAS_IMAGENES)
     }

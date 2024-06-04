@@ -19,7 +19,6 @@ class GuardadasViewHolder (val binding: PerfilLayoutBinding): RecyclerView.ViewH
 
         binding.llParent.addView(img);
 
-
         val screenWidth: Int = context.getResources().getDisplayMetrics().widthPixels
         val imageViewWidth = screenWidth / 3
 
@@ -34,6 +33,7 @@ class GuardadasViewHolder (val binding: PerfilLayoutBinding): RecyclerView.ViewH
         layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
 
         img.setLayoutParams(layoutParams)
+        img.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 
     fun base64ToBitmap(base64String: String): Bitmap {

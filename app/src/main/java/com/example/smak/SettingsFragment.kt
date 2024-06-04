@@ -3,6 +3,7 @@ package com.example.smak
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
@@ -28,7 +29,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         initThemePreference()
         initLogoutPreference()
+        initIdiomas()
     }
+
 
     private fun initFirebaseUse() {
         val store = Locator.settingsPreferencesRepository
@@ -43,6 +46,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
     }
+
+
 
     private fun initThemePreference() {
         val themeValue = preferences.getString("modo", "0")!!
@@ -65,6 +70,41 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
+    }
+
+    private fun initIdiomas(){
+
+        val langValue = preferences!!.getString(
+            getString(R.string.key_lang),
+            getString(R.string.def_value_lang))
+
+        val listPreferenceLang = findPreference<ListPreference>(getString(R.string.key_lang))
+        listPreferenceLang?.summary = listPreferenceLang?.entries?.get(langValue!!.toInt())
+        listPreferenceLang?.value = langValue
+        listPreferenceLang?.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference) {
+                val newLang = newValue.toString()
+                preferences.edit()?.putString(getString(R.string.key_lang), newLang)?.apply()
+
+                when(newLang.toInt()){
+                    0 -> setLocale(Locale.getDefault().language)
+                    1 -> setLocale("es")
+                    2 -> setLocale("en")
+                }
+                requireActivity().recreate()
+
+                listPreferenceLang.summary = listPreferenceLang.entries?.get(newLang.toInt())
+            }
+            true
+        }
+    }
+
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        //Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 
     private fun initLogoutPreference() {

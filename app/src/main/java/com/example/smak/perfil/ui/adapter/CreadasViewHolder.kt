@@ -34,6 +34,7 @@ class CreadasViewHolder (val binding: PerfilLayoutBinding): RecyclerView.ViewHol
         layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
 
         img.setLayoutParams(layoutParams)
+        img.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 
     fun base64ToBitmap(base64String: String): Bitmap {
