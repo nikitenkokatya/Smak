@@ -4,6 +4,8 @@ package com.example.smak.base
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.example.smak.R
@@ -17,7 +19,6 @@ class  FragmentProgressDialog : DialogFragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(view)
         builder.setCancelable(false)
-        builder.setTitle("Esperando...")
         val dialog = builder.create()
         dialog.setCanceledOnTouchOutside(false)
         return dialog

@@ -148,6 +148,9 @@ class BuscadorFragment : Fragment(), RecetaAdapter.onClick {
     }
 
     override fun onCommentButtonClick(receta: Receta) {
+        var bundle = Bundle()
+        bundle.putParcelable(Receta.TAG, receta)
 
+        findNavController().navigate(R.id.action_buscadorFragment2_to_comentariosFragment, bundle)
     }
 }

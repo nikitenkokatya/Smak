@@ -68,17 +68,14 @@ class SmakFragment : Fragment(), RecetaAdapter.onClick{
     }
 
     private fun showProgressBar(value : Boolean){
-        if(value)
-            findNavController().navigate(R.id.action_smakFragment_to_fragmentProgressDialog)
-        else
-            findNavController().popBackStack()
+
     }
     fun onSuccess(){
-        //binding.imageView.visibility = GONE
+        binding.lotiesSmak.visibility = GONE
         binding.rvlista.visibility = VISIBLE
     }
     fun onNoError(){
-        //binding.imageView.visibility = VISIBLE
+        binding.lotiesSmak.visibility = VISIBLE
         binding.rvlista.visibility = GONE
     }
     fun initRV(){

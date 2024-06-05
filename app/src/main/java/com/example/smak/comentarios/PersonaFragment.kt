@@ -1,4 +1,4 @@
-package com.example.smak
+package com.example.smak.comentarios
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -23,17 +23,16 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.smak.Locator
+import com.example.smak.R
 import com.example.smak.data.Receta
 import com.example.smak.database.repository.PerfilRepository
 import com.example.smak.database.repository.RecetaRepository
 import com.example.smak.databinding.FragmentPersonaBinding
 import com.example.smak.databinding.PerfilLayoutBinding
-import com.example.smak.perfil.ui.adapter.CreadasAdapter
 import com.example.smak.perfil.ui.usecase.PerfilViewModel
-import com.example.smak.ui.adapter.RecetaAdapter
 import com.google.firebase.auth.FirebaseAuth
 import kotlin.math.min
 
@@ -184,6 +183,7 @@ class PRecetaViewHolder(val binding: PerfilLayoutBinding) : RecyclerView.ViewHol
         layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
 
         img.setLayoutParams(layoutParams)
+        img.scaleType = ImageView.ScaleType.CENTER_CROP
     }
 
     fun base64ToBitmap(base64String: String): Bitmap {

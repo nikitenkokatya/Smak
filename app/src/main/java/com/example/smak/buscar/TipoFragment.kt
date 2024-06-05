@@ -1,4 +1,4 @@
-package com.example.smak
+package com.example.smak.buscar
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +9,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.smak.MainActivity
+import com.example.smak.R
+import com.example.smak.buscar.adapter.RecipeTypeAdapter
+import com.example.smak.data.Tipo
 import com.example.smak.databinding.FragmentTipoBinding
 import com.example.smak.databinding.ItemTipoBinding
-import com.example.smak.ui.adapter.RecetaAdapter
-import com.google.firebase.firestore.core.OrderBy.Direction
 
 
 class TipoFragment : Fragment() {
@@ -31,10 +33,10 @@ class TipoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val tipos = listOf(
-            Tipo("Desayuno", R.mipmap.ic_postree),
-            Tipo("Almuerzo", R.mipmap.ic_postre),
-            Tipo("Cena", R.drawable.ic_postre),
-            Tipo("Postre", R.drawable.ic_postre)
+            Tipo("Desayuno", R.drawable.desayunoo),
+            Tipo("Almuerzo", R.drawable.almuerzoo),
+            Tipo("Cena", R.drawable.cenaa),
+            Tipo("Postre", R.drawable.postree)
         )
 
         val adapter = RecipeTypeAdapter(tipos) { type ->
@@ -59,37 +61,3 @@ class TipoFragment : Fragment() {
         (activity as MainActivity).setDefaultHighlight()
     }
 }
-
-
-class RecipeTypeAdapter(
-    private val types: List<Tipo>,
-    private val onClick: (String) -> Unit) : RecyclerView.Adapter<RecipeTypeAdapter.ViewHolder>() {
-
-    inner class ViewHolder(private val binding: ItemTipoBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Tipo) {
-            binding.txttipo.text = item.name
-            Glide.with(binding.imgftipo.context)
-                .load(item.imageRes)
-                .into(binding.imgftipo)
-            binding.executePendingBindings()
-            binding.root.setOnClickListener { onClick(item.name) }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemTipoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(types[position])
-    }
-
-    override fun getItemCount() = types.size
-}
-
-
-data class Tipo(
-    val name: String,
-    val imageRes: Int
-)

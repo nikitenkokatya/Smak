@@ -8,24 +8,23 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="96dp"
-        android:src="@drawable/smak_logo"
+        android:layout_width="433dp"
+        android:layout_height="347dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/logo_welcome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvWelcome"
-        android:layout_width="0dp"
-        android:layout_height="320dp"
-        android:backgroundTint="#F9CFFF"
-
+        android:layout_width="410dp"
+        android:layout_height="360dp"
+        android:backgroundTint="@color/color5"
         app:cardCornerRadius="35dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -48,7 +47,7 @@
                 android:id="@+id/tvWelcomeMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="36dp"
                 android:text="Registrate o crea una cuenta para empezar a compartir tus recetas."
                 android:textColor="@color/black"
@@ -63,7 +62,7 @@
                 android:id="@+id/btnGoToLogin"
                 android:layout_width="180dp"
                 android:layout_height="60dp"
-                android:layout_marginBottom="64dp"
+                android:layout_marginBottom="80dp"
                 android:backgroundTint="@color/white"
                 android:text="Iniciar sesión"
                 android:textColor="#3C3C3C"
