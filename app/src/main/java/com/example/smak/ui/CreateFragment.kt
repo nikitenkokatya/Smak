@@ -32,6 +32,7 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.lang.Exception
 import android.util.Base64
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.smak.perfil.ProfileFragment
 import com.example.smak.utils.createNotificationChannel
@@ -58,7 +59,6 @@ class CreateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentCreateBinding.inflate(inflater, container, false)
         binding.viewmodel = viewmodel
         binding.lifecycleOwner = this

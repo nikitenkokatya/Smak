@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/createFragment2"
         android:name="com.example.smak.ui.CreateFragment"
-        android:label="Add"
+        android:label="Crea tu receta"
         tools:layout="@layout/fragment_create" />
     <fragment
         android:id="@+id/profileFragment2"
@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/comprasFragment2"
         android:name="com.example.smak.compras.ComprasFragment"
-        android:label="Shop"
+        android:label="Listado  de compras"
         tools:layout="@layout/fragment_compras" />
     <fragment
         android:id="@+id/welcomeFragment"
@@ -91,7 +91,7 @@
             app:destination="@id/profileFragment2" />
         <action
             android:id="@+id/action_detailFragment_to_buscadorFragment2"
-            app:destination="@id/buscadorFragment2" />
+            app:destination="@id/buscador" />
         <action
             android:id="@+id/action_detailFragment_to_personaFragment"
             app:destination="@id/personaFragment" />
@@ -99,7 +99,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.smak.SettingsFragment"
-        android:label="SettingsFragment" >
+        android:label="Configuración">
         <action
             android:id="@+id/action_settingsFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment"
@@ -130,25 +130,25 @@
             app:destination="@id/smakFragment" />
     </fragment>
     <fragment
-        android:id="@+id/tipoFragment"
+        android:id="@+id/tipofragmet"
         android:name="com.example.smak.buscar.TipoFragment"
-        android:label="Tipo">
+        android:label="Tipo"
+        tools:layout="@layout/fragment_tipo">
         <action
             android:id="@+id/action_tipoFragment_to_buscadorFragment2"
-            app:destination="@id/buscadorFragment2" />
+            app:destination="@id/buscador" />
     </fragment>
 
     <fragment
-        android:id="@+id/buscadorFragment2"
+        android:id="@+id/buscador"
         android:name="com.example.smak.buscar.BuscadorFragment"
-        android:label="Buscar"
-        tools:layout="@layout/fragment_buscador">
+        android:label="Buscador">
         <action
             android:id="@+id/action_buscadorFragment2_to_apiDetailFragment"
             app:destination="@id/apiDetailFragment" />
         <action
             android:id="@+id/action_buscadorFragment2_to_tipoFragment"
-            app:destination="@id/tipoFragment" />
+            app:destination="@id/tipofragmet" />
         <action
             android:id="@+id/action_buscadorFragment2_to_detailFragment"
             app:destination="@id/detailFragment" />

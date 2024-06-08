@@ -7,7 +7,7 @@
     <item
         android:id="@+id/nav_buscador"
         android:icon="@drawable/ic_buscar"
-        android:title="Buscador" />
+        android:title="Tipo" />
     <item
         android:id="@+id/nav_crear"
         android:icon="@drawable/ic_add"

@@ -11,12 +11,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.preference.ListPreference
 import com.example.smak.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener{
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -32,7 +29,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setSupportActionBar(binding.toolbar)
 
         topLevelDestinations = setOf(R.id.welcomeFragment, R.id.smakFragment,
-            R.id.tipoFragment, R.id.createFragment2, R.id.comprasFragment2, R.id.profileFragment2)
+             R.id.createFragment2,R.id.tipofragmet, R.id.comprasFragment2, R.id.profileFragment2)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
@@ -49,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> navController.navigate(R.id.smakFragment)
-                R.id.nav_buscador -> navController.navigate(R.id.tipoFragment)
+                R.id.nav_buscador -> navController.navigate(R.id.tipofragmet)
                 R.id.nav_crear -> navController.navigate(R.id.createFragment2)
                 R.id.nav_compras -> navController.navigate(R.id.comprasFragment2)
                 R.id.nav_profile -> navController.navigate(R.id.profileFragment2)

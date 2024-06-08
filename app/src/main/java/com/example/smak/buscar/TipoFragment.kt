@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.example.smak.MainActivity
 import com.example.smak.R
 import com.example.smak.buscar.adapter.RecipeTypeAdapter
 import com.example.smak.data.Tipo
+import com.example.smak.databinding.FragmentBuscadorBinding
 import com.example.smak.databinding.FragmentTipoBinding
 import com.example.smak.databinding.ItemTipoBinding
 
