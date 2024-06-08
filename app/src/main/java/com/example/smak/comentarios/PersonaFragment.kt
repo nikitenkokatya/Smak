@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -80,12 +81,12 @@ class PersonaFragment : Fragment(), PerosonaAdapter.onClickCreadas {
                     base64ToBitmap(PerfilRepository.userPerfil!!.foto!!)
                 )
             )
-            binding.txtnperson.text = PerfilRepository.userPerfil!!.nombre
+            (activity as AppCompatActivity).supportActionBar?.title = PerfilRepository.userPerfil!!.nombre
         }, {
             binding.imgpersona.setImageResource(R.drawable.user)
             val userEmail = user!!.email ?: ""
             val userNameBeforeAt = userEmail.substringBefore('@')
-            binding.txtnperson.text = userNameBeforeAt
+            (activity as AppCompatActivity).supportActionBar?.title = userNameBeforeAt
         })
     }
 

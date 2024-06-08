@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="searchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@drawable/buscador_ovalo</item>
+    </style>
+</resources>

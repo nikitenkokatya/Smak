@@ -55,7 +55,7 @@ class DetailFragment : Fragment(), MenuProvider{
 
         viewmodel.recetasFavoritas.observe(viewLifecycleOwner, Observer { recetas ->
             if (viewmodel.recetasFavoritas.value!!.contains(binding.receta))
-                saveMenuItem.icon = resources.getDrawable(R.drawable.ic_savemarcado)
+                saveMenuItem.icon = resources.getDrawable(R.drawable.ic_guardarm)
             else
                 saveMenuItem.icon = resources.getDrawable(R.drawable.ic_guardar)
         })

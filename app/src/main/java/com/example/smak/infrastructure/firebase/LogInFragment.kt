@@ -203,7 +203,7 @@ class LogInFragment : Fragment() {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
-                    "Please enter email and password",
+                    "Introduce email y contraseña",
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -223,7 +223,7 @@ class LogInFragment : Fragment() {
                     } else {
                         Toast.makeText(
                             requireContext(),
-                            "Login failed: ${task.exception?.message}",
+                            "${task.exception?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -281,14 +281,14 @@ class LogInFragment : Fragment() {
                     val user = auth.currentUser
                     Toast.makeText(
                         requireContext(),
-                        "Signed in as ${user?.displayName}",
+                        "Registrado como ${user?.displayName}",
                         Toast.LENGTH_SHORT
                     ).show()
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
                 } else {
-                    Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Error de autenticación", Toast.LENGTH_SHORT)
                         .show()
                 }
             }

@@ -31,6 +31,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -181,14 +182,16 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
                 )
             )
 
-            binding.txtnperson.text = PerfilRepository.userPerfil!!.nombre
+            (activity as AppCompatActivity).supportActionBar?.title = PerfilRepository.userPerfil!!.nombre
+
         }, {
             // onFailure
             binding.imageView.setImageResource(R.drawable.user)
 
             val userEmail = user.email ?: ""
             val userNameBeforeAt = userEmail.substringBefore('@')
-            binding.txtnperson.text = userNameBeforeAt
+            (activity as AppCompatActivity).supportActionBar?.title = userNameBeforeAt
+
         })
     }
 
@@ -270,7 +273,7 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
 
 
     override fun userOnLongClickC(receta: Receta): Boolean {
-        val dialog = BaseFragmentDialog.newInstance("Atencion", "¿Seguro que quieres borrar?")
+        val dialog = BaseFragmentDialog.newInstance("Atención", "¿Seguro que quieres borrar?")
 
         dialog.show((context as AppCompatActivity).supportFragmentManager, ContentValues.TAG)
 
@@ -295,11 +298,11 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
         val dialog = alertDialogBuilder.create()
         dialog.show()
 
-        dialogView.findViewById<Button>(R.id.btngaleria).setOnClickListener {
+        dialogView.findViewById<ImageButton>(R.id.btngaleria).setOnClickListener {
             openGallery()
         }
 
-        dialogView.findViewById<Button>(R.id.btnCamara).setOnClickListener {
+        dialogView.findViewById<ImageButton>(R.id.btnCamara).setOnClickListener {
             checkPermissionAndOpenCamera()
         }
 
@@ -307,7 +310,7 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
             val userName = dialogView.findViewById<TextView>(R.id.tieUserName).text.toString()
 
             if (userName.isEmpty() || base64img.isEmpty()) {
-                dialog.dismiss()
+                Toast.makeText(requireContext(), "Debes ingresar un nombre y elegir una foto", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -322,12 +325,12 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
                         base64ToBitmap(PerfilRepository.userPerfil!!.foto!!)
                     )
                 )
-
-                binding.txtnperson.text = PerfilRepository.userPerfil!!.nombre
+                (activity as AppCompatActivity).supportActionBar?.title = PerfilRepository.userPerfil!!.nombre
             }, {
                 // onFailure
                 binding.imageView.setImageResource(R.drawable.user)
-                binding.txtnperson.text = mAuth.currentUser!!.email!!
+                val userNameBeforeAt = mAuth.currentUser!!.email!!.substringBefore('@')
+                (activity as AppCompatActivity).supportActionBar?.title  = userNameBeforeAt
             })
 
             dialog.dismiss()

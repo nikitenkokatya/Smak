@@ -9,20 +9,6 @@
 
 
     <TextView
-        android:id="@+id/txtnperson"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.203" />
-
-    <TextView
         android:layout_width="86dp"
         android:layout_height="27dp"
         android:text="Recetas"
@@ -49,8 +35,8 @@
 
     <ImageView
         android:id="@+id/imgpersona"
-        android:layout_width="128dp"
-        android:layout_height="115dp"
+        android:layout_width="138dp"
+        android:layout_height="119dp"
         android:src="@drawable/user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

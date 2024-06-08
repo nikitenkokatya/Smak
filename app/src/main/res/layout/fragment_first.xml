@@ -28,7 +28,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="32dp"
                 android:text="Login"
-                android:textSize="24sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -61,34 +62,29 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:endIconMode="password_toggle"
                 app:layout_constraintTop_toBottomOf="@+id/tilEmail">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tiePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPassword"
                     android:hint="Password" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <CheckBox
-                android:id="@+id/cbxRememberMe"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:text="Recuérdame"
-                app:layout_constraintStart_toStartOf="@+id/tilPassword"
-                app:layout_constraintTop_toBottomOf="@+id/tilPassword" />
 
             <TextView
                 android:id="@+id/btnChangePassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Cambiar contraseña"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/cbxRememberMe"
                 app:layout_constraintEnd_toEndOf="@+id/tilPassword"
-                app:layout_constraintTop_toTopOf="@+id/cbxRememberMe" />
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/cbxRememberMe"
+                app:layout_constraintTop_toBottomOf="@+id/tilPassword" />
 
             <Button
                 android:id="@+id/btnLogin"
@@ -96,14 +92,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="72dp"
                 android:text="Iniciar Sesión"
                 android:textAllCaps="true"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <CheckBox
+                android:id="@+id/cbxRememberMe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Recuerdame"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cbxRememberMe" />
+                app:layout_constraintTop_toBottomOf="@+id/tilPassword" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -121,9 +128,32 @@
         android:src="@mipmap/ic_google"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.906" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lotiefondo"
+        android:layout_width="723dp"
+        android:layout_height="392dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="432dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/fondo" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lotiefondo2"
+        android:layout_width="669dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="460dp"
+        android:layout_marginEnd="76dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/fondo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

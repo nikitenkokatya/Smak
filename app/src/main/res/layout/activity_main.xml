@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         app:labelVisibilityMode="unlabeled"
         app:layout_anchor="@+id/include"
+        app:backgroundTint="@color/white"
         app:layout_anchorGravity="bottom|center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

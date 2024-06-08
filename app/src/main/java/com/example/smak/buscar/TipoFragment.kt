@@ -33,10 +33,10 @@ class TipoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val tipos = listOf(
-            Tipo("Desayuno", R.drawable.desayunoo),
-            Tipo("Almuerzo", R.drawable.almuerzoo),
-            Tipo("Cena", R.drawable.cenaa),
-            Tipo("Postre", R.drawable.postree)
+            Tipo("Desayuno", R.drawable.desayuno),
+            Tipo("Almuerzo", R.drawable.almuerzo),
+            Tipo("Postre", R.drawable.postre),
+            Tipo("Cena", R.drawable.cena)
         )
 
         val adapter = RecipeTypeAdapter(tipos) { type ->

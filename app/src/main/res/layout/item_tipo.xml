@@ -6,7 +6,7 @@
     <data>
         <variable
             name="tipo"
-            type="com.example.smak.buscar.Tipo" />
+            type="com.example.smak.data.Tipo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

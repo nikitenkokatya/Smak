@@ -64,7 +64,7 @@ class SecondFragment : Fragment() {
                     if (task.isSuccessful) {
                         findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
                     } else {
-                        Toast.makeText(requireContext(), "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
