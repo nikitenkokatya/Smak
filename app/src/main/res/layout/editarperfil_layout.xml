@@ -63,6 +63,7 @@
                     android:id="@+id/tieUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:hint="User name" />
             </com.google.android.material.textfield.TextInputLayout>
 

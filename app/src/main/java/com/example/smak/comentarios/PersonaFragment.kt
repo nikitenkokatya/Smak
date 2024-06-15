@@ -1,6 +1,5 @@
 package com.example.smak.comentarios
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.BitmapShader
@@ -13,26 +12,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.example.smak.Locator
 import com.example.smak.R
+import com.example.smak.comentarios.adapter.PerosonaAdapter
+import com.example.smak.comentarios.usecase.PersonaViewModel
 import com.example.smak.data.Receta
 import com.example.smak.database.repository.PerfilRepository
-import com.example.smak.database.repository.RecetaRepository
 import com.example.smak.databinding.FragmentPersonaBinding
-import com.example.smak.databinding.PerfilLayoutBinding
 import com.example.smak.perfil.ui.usecase.PerfilViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlin.math.min
@@ -73,7 +62,6 @@ class PersonaFragment : Fragment(), PerosonaAdapter.onClickCreadas {
 
     private fun loadPerfil(email: String) {
         mAuth = FirebaseAuth.getInstance()
-        val user = mAuth.currentUser
         perfilViewModel.getPerfil(email, {
             // onSuccess
             binding.imgpersona.setImageBitmap(
@@ -84,7 +72,7 @@ class PersonaFragment : Fragment(), PerosonaAdapter.onClickCreadas {
             (activity as AppCompatActivity).supportActionBar?.title = PerfilRepository.userPerfil!!.nombre
         }, {
             binding.imgpersona.setImageResource(R.drawable.user)
-            val userEmail = user!!.email ?: ""
+            val userEmail = email ?: ""
             val userNameBeforeAt = userEmail.substringBefore('@')
             (activity as AppCompatActivity).supportActionBar?.title = userNameBeforeAt
         })
@@ -124,87 +112,5 @@ class PersonaFragment : Fragment(), PerosonaAdapter.onClickCreadas {
         bundle.putParcelable(Receta.TAG, receta)
 
         findNavController().navigate(R.id.action_personaFragment_to_detailFragment, bundle)
-    }
-}
-
-class PerosonaAdapter(private val listener: onClickCreadas) :
-    ListAdapter<Receta, PRecetaViewHolder>(LIST_COMPARATOR) {
-
-    interface onClickCreadas {
-        fun onClickDetailsC(receta: Receta)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PRecetaViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return PRecetaViewHolder(PerfilLayoutBinding.inflate(layoutInflater, parent, false))
-    }
-
-    override fun onBindViewHolder(holder: PRecetaViewHolder, position: Int) {
-        val item = currentList[position]
-        holder.bind(item, Locator.requieredApplication)
-
-        holder.binding.root.setOnClickListener() {
-            listener.onClickDetailsC(item)
-        }
-    }
-
-    companion object {
-        val LIST_COMPARATOR = object : DiffUtil.ItemCallback<Receta>() {
-            override fun areItemsTheSame(oldItem: Receta, newItem: Receta): Boolean {
-                return newItem == oldItem
-            }
-
-            override fun areContentsTheSame(oldItem: Receta, newItem: Receta): Boolean {
-                return newItem.nombre == oldItem.nombre
-            }
-        }
-    }
-}
-
-class PRecetaViewHolder(val binding: PerfilLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    fun bind(item: Receta, context: Context) {
-        val img = ImageView(context)
-        img.setImageBitmap(base64ToBitmap(item.imagenes[0]))
-
-        binding.llParent.addView(img);
-
-
-        val screenWidth: Int = context.getResources().getDisplayMetrics().widthPixels
-        val imageViewWidth = screenWidth / 3
-
-        val layoutParams = ConstraintLayout.LayoutParams(
-            imageViewWidth,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-
-        img.setLayoutParams(layoutParams)
-
-        layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-        layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-
-        img.setLayoutParams(layoutParams)
-        img.scaleType = ImageView.ScaleType.CENTER_CROP
-    }
-
-    fun base64ToBitmap(base64String: String): Bitmap {
-        val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-    }
-}
-
-
-class PersonaViewModel : ViewModel() {
-    private val recetaRepository = RecetaRepository()
-
-    private val _recetasPrivadas = MutableLiveData<List<Receta>>()
-    val recetasPrivadas: LiveData<List<Receta>> get() = _recetasPrivadas
-
-    fun obtenerRecetasPrivadas(email: String, textView: TextView) {
-        recetaRepository.getRecetasPrivadas(email) { recetas ->
-            _recetasPrivadas.value = recetas
-            textView.text = recetas.size.toString()
-
-        }
     }
 }

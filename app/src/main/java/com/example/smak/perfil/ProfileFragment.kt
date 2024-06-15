@@ -29,6 +29,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
@@ -123,14 +125,14 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
 
         viewmodel.getRecetas().observe(viewLifecycleOwner, Observer { recetas ->
             adapterCreadas.submitList(recetas)
-            binding.rvcreadas.visibility = View.VISIBLE
-            binding.rvguardadas.visibility = View.GONE
+            binding.rvcreadas.visibility = VISIBLE
+            binding.rvguardadas.visibility = GONE
         })
 
         viewmodelfav.recetasFavoritas.observe(viewLifecycleOwner, Observer { recetas ->
             adapterGuardadas.submitList(recetas.toList())
-            binding.rvcreadas.visibility = View.GONE
-            binding.rvguardadas.visibility = View.VISIBLE
+            binding.rvcreadas.visibility = GONE
+            binding.rvguardadas.visibility = VISIBLE
         })
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer { state ->
@@ -241,14 +243,15 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
     }
 
     fun onSuccess() {
-        //binding.imageView.visibility = GONE
-        //binding.rvcreadas.visibility = View.VISIBLE
+        binding.imgchef.visibility = GONE
+        binding.rvcreadas.visibility = View.VISIBLE
     }
 
     fun onNoError() {
-        //binding.imageView.visibility = VISIBLE
-        binding.rvguardadas.visibility = View.GONE
+        binding.imgchef.visibility = VISIBLE
+        binding.rvguardadas.visibility = GONE
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

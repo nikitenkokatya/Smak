@@ -1,7 +1,40 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Smak" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">#FFC107</item>
+        <item name="colorPrimaryVariant">@color/color6</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/color3</item>
+        <item name="colorSecondaryVariant">@color/color4</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="android:statusBarColor">#121212</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="colorOnSecondaryContainer">@color/color2</item>
+        <item name="colorSecondaryContainer">#121212</item>
+        <item name="colorTertiary">#121212</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">#121212</item>
+        <item name="colorOnTertiaryContainer">@color/white</item>
+
+        <item name="colorSurface">#121212</item>
+        <item name="colorOnSurface">@color/color2</item>
+        <item name="colorSurfaceVariant">#121212</item>
+        <item name="colorOnSurfaceVariant">@color/color5</item>
+
+        <item name="colorOutline">#FFC107</item>
+        <item name="colorOnSurfaceInverse">@color/color2</item>
+        <item name="colorSurfaceInverse">@color/color1</item>
+        <item name="colorPrimaryInverse">@color/white</item>
+
+        <item name="cardViewStyle">@style/CustomCardView.Dark</item>
+    </style>
+
+    <style name="CustomCardView.Dark" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

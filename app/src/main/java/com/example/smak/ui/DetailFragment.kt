@@ -1,6 +1,7 @@
 package com.example.smak.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,14 +27,10 @@ import com.google.android.material.snackbar.Snackbar
 
 class DetailFragment : Fragment(), MenuProvider{
 
-
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private val viewmodel: GuardadasViewModel by viewModels()
-
-
     private lateinit var saveMenuItem: MenuItem
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,15 +40,12 @@ class DetailFragment : Fragment(), MenuProvider{
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         setUpToolbar()
         val receta = requireArguments().getParcelable<Receta>(Receta.TAG)
         binding.receta = receta
-
 
         viewmodel.recetasFavoritas.observe(viewLifecycleOwner, Observer { recetas ->
             if (viewmodel.recetasFavoritas.value!!.contains(binding.receta))
@@ -64,14 +58,11 @@ class DetailFragment : Fragment(), MenuProvider{
 
         receta?.let {
             val imagenes = receta.imagenes
-
-
             val adapter = PhotoListAdapter(imagenes)
             binding.rvfotodetail.adapter = adapter
             binding.rvfotodetail.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
     }
-
 
     private fun setUpToolbar() {
         val menuhost: MenuHost = requireActivity()
@@ -98,44 +89,9 @@ class DetailFragment : Fragment(), MenuProvider{
                 true
             }
             R.id.action_compartir ->{
-                /*   val textoCompartir = "Te comparto esta receta: ${binding.receta?.nombre}"
-
-
-                   val compartirIntent = Intent(Intent.ACTION_SEND)
-                   compartirIntent.type = "text/plain"
-                   compartirIntent.putExtra(Intent.EXTRA_TEXT, textoCompartir)
-
-
-                   if (compartirIntent.resolveActivity(requireActivity().packageManager) != null) {
-                       startActivity(compartirIntent)
-                   } else {
-                   }
-                   true*/
-
-
-                /* val textoCompartir = "Te comparto esta receta: ${binding.receta?.nombre}"
-
-
-                 val compartirIntent = Intent(Intent.ACTION_SEND)
-                 compartirIntent.type = "text/plain"
-                 compartirIntent.putExtra(Intent.EXTRA_TEXT, textoCompartir)
-
-
-                 val urlApp = "https://tuapp.com/receta/${binding.receta?.id}"
-                 compartirIntent.putExtra(Intent.EXTRA_TEXT, "$textoCompartir\n$urlApp")
-
-
-                 if (compartirIntent.resolveActivity(requireActivity().packageManager) != null) {
-                     startActivity(compartirIntent)
-                 } else {
-                     Toast.makeText(requireContext(), "No se encontró ninguna aplicación para compartir", Toast.LENGTH_SHORT).show()
-                 }
-                 true*/
-
-
                 val textoCompartir = "Te comparto esta receta: ${binding.receta?.nombre}\n" +
-                        "Ingredientes: ${binding.receta?.ingredientes}\n" +
-                        "Pasos: ${binding.receta?.pasos}"
+                        "Para ver la receta, descarga la aplicación.\n" +
+                        "GitHub: https://github.com/tu_usuario/tu_repo"
 
 
                 val compartirIntent = Intent(Intent.ACTION_SEND)

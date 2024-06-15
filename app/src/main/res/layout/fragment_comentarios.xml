@@ -21,21 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lotiesNoCompras"
-        android:layout_width="322dp"
-        android:layout_height="395dp"
-        android:layout_marginBottom="78dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-         />
-
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="237dp"
@@ -73,6 +58,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgcomment"
+        android:layout_width="206dp"
+        android:layout_height="318dp"
+        android:layout_marginTop="140dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/comment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

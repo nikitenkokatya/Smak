@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Cuenta del usuario -->
-    <string name="key_account">account</string>
+    <string name="key_account" translatable="false">account</string>
     <string name="title_account_setting">Cuenta del usuario</string>
     <string name="summary_account">Información de la cuenta del usuario</string>
     <string name="account_header">Información del usuario</string>
 
-        <string name="key_email">email</string>
-        <string name="title_email">E-mail</string>
+        <string name="key_email" translatable="false">email</string>
+        <string name="title_email" translatable="false">E-mail</string>
 
-        <string name="key_password">password</string>
+        <string name="key_password" translatable="false">password</string>
         <string name="title_password">Contraseña</string>
 
     <!-- Notificaciones -->

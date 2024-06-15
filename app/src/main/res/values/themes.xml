@@ -1,26 +1,56 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Smak" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/color2</item>
+        <item name="colorPrimary">#FFC107</item>
         <item name="colorPrimaryVariant">@color/color6</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/color6</item>
+        <item name="colorSecondary">@color/color3</item>
         <item name="colorSecondaryVariant">@color/color4</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="android:colorBackground">@color/white</item>
         <item name="colorOnBackground">@color/black</item>
-        <item name="colorOnSurface">@color/black</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorOnSecondaryContainer">@color/color2</item>
+        <item name="colorSecondaryContainer">@color/white</item>
+        <item name="colorTertiary">@color/white</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/white</item>
+        <item name="colorOnTertiaryContainer">@color/white</item>
+        <item name="colorSurface">@color/color3</item>
+        <item name="colorOnSurface">@color/color2</item>
+        <item name="colorSurfaceVariant">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/color5</item>
+        <item name="colorOutline">#FFC107</item>
+        <item name="colorOnSurfaceInverse">@color/color2</item>
+        <item name="colorSurfaceInverse">#FDFBF8</item>
+        <item name="colorPrimaryInverse">#AFACAC</item>
     </style>
 
     <style name="Theme.Smak" parent="Base.Theme.Smak">
-        <item name="colorPrimary">@color/color2</item>
+        <item name="colorPrimary">#FFC107</item>
         <item name="colorPrimaryVariant">@color/color6</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/color6</item>
+        <item name="colorSecondary">@color/color3</item>
         <item name="colorSecondaryVariant">@color/color4</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="android:colorBackground">@color/white</item>
         <item name="colorOnBackground">@color/black</item>
-        <item name="colorOnSurface">@color/black</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorOnSecondaryContainer">@color/color2</item>
+        <item name="colorSecondaryContainer">@color/white</item>
+        <item name="colorTertiary">@color/white</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/white</item>
+        <item name="colorOnTertiaryContainer">@color/white</item>
+        <item name="colorSurface">@color/color3</item>
+        <item name="colorOnSurface">@color/color2</item>
+        <item name="colorSurfaceVariant">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/color5</item>
+        <item name="colorOutline">#FFC107</item>
+        <item name="colorOnSurfaceInverse">@color/color2</item>
+        <item name="colorSurfaceInverse">@color/color1</item>
+        <item name="colorPrimaryInverse">@color/white</item>
     </style>
 </resources>

@@ -20,7 +20,7 @@
         android:id="@+id/cvWelcome"
         android:layout_width="410dp"
         android:layout_height="360dp"
-        android:backgroundTint="@color/color5"
+        android:backgroundTint="@color/color3"
         app:cardCornerRadius="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -8,6 +8,8 @@ import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
@@ -48,6 +50,11 @@ class BuscadorFragment : Fragment(), RecetaAdapter.onClick {
 
         viewmodel.recetas.observe(viewLifecycleOwner, Observer { recetas ->
             recetaAdapter.submitList(recetas)
+            if (recetas.isEmpty()) {
+                showImageBusqueda()
+            } else {
+                hideImageBusqueda()
+            }
         })
 
         viewmodel.getState().observe(viewLifecycleOwner) { state ->
@@ -76,18 +83,27 @@ class BuscadorFragment : Fragment(), RecetaAdapter.onClick {
             startVoiceInput()
         }
     }
-    private fun showProgressBar(value : Boolean){
-
-    }
-    fun onSuccess(){
-        //binding.imageView.visibility = GONE
-        binding.rvbusqueda.visibility = View.VISIBLE
-    }
-    fun onNoError(){
-        //binding.imageView.visibility = VISIBLE
-        binding.rvbusqueda.visibility = View.GONE
+    private fun showProgressBar(value: Boolean) {
+        binding.imgbusqueda.visibility = if (value) VISIBLE else GONE
     }
 
+    private fun onSuccess() {
+        hideImageBusqueda()
+    }
+
+    private fun onNoError() {
+        showImageBusqueda()
+    }
+
+    private fun showImageBusqueda() {
+        binding.imgbusqueda.visibility = VISIBLE
+        binding.rvbusqueda.visibility = GONE
+    }
+
+    private fun hideImageBusqueda() {
+        binding.imgbusqueda.visibility = GONE
+        binding.rvbusqueda.visibility = VISIBLE
+    }
     fun initRV() {
         recetaAdapter = RecetaAdapter( this)
         binding.rvbusqueda.layoutManager = LinearLayoutManager(requireContext())

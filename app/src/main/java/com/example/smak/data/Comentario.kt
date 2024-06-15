@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Comentario(
-    val autor: String = "",
+    var autor: String = "",
     val email:String = "",
     val contenido: String = "",
     val fecha: String = "",

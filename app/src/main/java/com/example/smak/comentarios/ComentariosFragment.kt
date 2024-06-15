@@ -68,12 +68,21 @@ class ComentariosFragment : Fragment(), ComentariosAdapter.onClick {
 
             comentariosViewModel.comentarios.observe(viewLifecycleOwner) { comentarios ->
                 adapter.submitList(comentarios)
+                toggleEmptyCommentsImage(comentarios.isEmpty())
             }
 
             comentariosViewModel.loadComentarios(recetaNombre)
         }
     }
-
+    private fun toggleEmptyCommentsImage(show: Boolean) {
+        if (show) {
+            binding.imgcomment.visibility = View.VISIBLE
+            binding.recyclerView.visibility = GONE
+        } else {
+            binding.imgcomment.visibility = GONE
+            binding.recyclerView.visibility = View.VISIBLE
+        }
+    }
     private fun initRecyclerView() {
         adapter = ComentariosAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())

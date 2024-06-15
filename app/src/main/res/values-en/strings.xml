@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smak</string>
+    <string name="title_logout">Sign out</string>
+    <string name="publicar">Public</string>
+</resources>

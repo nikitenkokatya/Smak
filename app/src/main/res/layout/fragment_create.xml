@@ -68,6 +68,7 @@
                         android:id="@+id/tienombre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/black"
                         android:text="@={viewmodel.nombre}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -85,6 +86,7 @@
                         android:hint="Escribe los ingredientes"
                         android:inputType="textMultiLine"
                         android:lines="5"
+                        android:textColor="@color/black"
                         android:maxLines="10"
                         android:minLines="1"
                         android:text="@={viewmodel.ingredientes}" />
@@ -104,6 +106,7 @@
                         android:hint="Escribe los pasos"
                         android:inputType="textMultiLine"
                         android:lines="10"
+                        android:textColor="@color/black"
                         android:maxLines="20"
                         android:minLines="1"
                         android:text="@={viewmodel.pasos}" />
@@ -119,7 +122,8 @@
                         android:id="@+id/tietiempo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Tiempo de preparación"
+                        android:hint="@string/time"
+                        android:textColor="@color/black"
                         android:text="@={viewmodel.tiempo}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:text="Guardar Receta" />
+                    android:text="@string/publicar" />
 
 
             </LinearLayout>

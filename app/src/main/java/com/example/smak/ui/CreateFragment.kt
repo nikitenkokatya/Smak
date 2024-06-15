@@ -113,11 +113,11 @@ class CreateFragment : Fragment() {
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer {
             when (it) {
-                CreateState.NombreEmptyError -> onCodeError()
+                CreateState.NombreEmptyError -> onNombreError()
                 CreateState.IngredientesEmptyError -> onFormatError()
-                CreateState.PasosError -> onFechaError()
+                CreateState.PasosError -> onPasosError()
                 CreateState.TiempoError -> onTiempoError()
-                CreateState.ImagenesEmptyError -> onFormatError()
+                CreateState.ImagenesEmptyError -> onImageError()
                 is CreateState.Error -> onError(it.ex)
                 is CreateState.Success<*> -> onSuccess(it.data as Receta)
                 else -> {}
@@ -131,8 +131,8 @@ class CreateFragment : Fragment() {
         binding.rvImagenes.adapter = photoAdapter
     }
 
-    fun onCodeError() {
-        binding.tilnombre.error = "Introduce el codigo"
+    fun onNombreError() {
+        binding.tilnombre.error = "Introduce el nombre"
         binding.tilnombre.requestFocus()
     }
     override fun onResume() {
@@ -145,19 +145,20 @@ class CreateFragment : Fragment() {
         binding.tilingredientes.requestFocus()
     }
 
-    fun onFechaError() {
-        binding.tilpasos.error = "Formato incorrecto"
+    fun onPasosError() {
+        binding.tilpasos.error = "Introduce los pasos"
         binding.tilpasos.requestFocus()
     }
 
     fun onTiempoError() {
-        binding.tiltiempo.error = "Formato incorrecto"
+        binding.tiltiempo.error = "Introduce el tiempo"
         binding.tiltiempo.requestFocus()
     }
-
+    fun  onImageError(){
+        Toast.makeText(requireContext(), "No hay imagenes", Toast.LENGTH_SHORT).show()
+    }
     fun onError(exception: Exception) {
         Toast.makeText(requireContext(), "Error al crear", Toast.LENGTH_SHORT).show()
-
     }
 
     override fun onDestroy() {

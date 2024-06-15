@@ -138,6 +138,7 @@ class RecetaRepository  {
                             val tipo = document.getString("tipo") ?: ""
                             val imagenesList = document.get("imagenes") as? List<String> ?: emptyList()
                             val autor = document.getString("autor") ?: ""
+
                             val receta = Receta(
                                 nombre,
                                 ingredientes,
