@@ -27,12 +27,23 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)!!
 
+
+        val accountPreference: Preference? = findPreference(getString(R.string.key_account))
+
+        accountPreference?.let {
+            val userEmail = getUserEmail()
+            it.summary = userEmail
+        }
+
         initThemePreference()
         initLogoutPreference()
         initIdiomas()
     }
 
-
+    private fun getUserEmail(): String {
+        val user = FirebaseAuth.getInstance().currentUser
+        return user?.email ?: "Correo electrónico no disponible"
+    }
     private fun initFirebaseUse() {
         val store = Locator.settingsPreferencesRepository
 
@@ -46,7 +57,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
     }
-
 
 
     private fun initThemePreference() {

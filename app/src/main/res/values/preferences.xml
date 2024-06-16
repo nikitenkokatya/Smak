@@ -13,26 +13,26 @@
         <string name="title_password">Contraseña</string>
 
     <!-- Notificaciones -->
-    <string name="key_notif">notif</string>
+    <string name="key_notif" translatable="false">notif</string>
     <string name="category_notification">Notificaciones</string>
 
-        <string name="key_active_notifications">activar_notificaciones</string>
+        <string name="key_active_notifications" translatable="false">activar_notificaciones</string>
         <string name="title_active_notifications">Activar notificaciones</string>
 
-        <string name="key_ringtone">ringtone</string>
-        <string name="title_ringtone">Tono de llamada</string>
+        <string name="key_ringtone" translatable="false">ringtone</string>
+        <string name="title_ringtone" translatable="false">Tono de llamada</string>
 
 
-    <string name="key_misc">misc</string>
-    <string name="category_misc">Otras preferencias</string>
+    <string name="key_misc" translatable="false">misc</string>
+    <string name="category_misc" translatable="false">Otras preferencias</string>
 
         <!-- Modo -->
-        <string name="tema">Tema de Aplicacion</string>
+        <string name="tema">Tema de Aplicación</string>
         <string name="title_modo">Modo / Tema</string>
-        <string name="key_modo">modo</string>
+        <string name="key_modo" translatable="false">modo</string>
 
         <!--Idioma-->
-        <string name="key_lang">lang</string>
+        <string name="key_lang" translatable="false">lang</string>
         <string name="title_lang">Idioma</string>
-        <string name="def_value_lang">0</string>
+        <string name="def_value_lang" translatable="false">0</string>
 </resources>

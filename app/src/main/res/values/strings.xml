@@ -5,9 +5,9 @@
     <string name="first_fragment_label" translatable="false">First Fragment</string>
     <string name="second_fragment_label" translatable="false">Second Fragment</string>
     <string name="next" translatable="false">Next</string>
-    <string name="previous">Previous</string>
-    <string name="default_web_client_id">564004941426-ep1spd3spg751ics429rj9lb51qrjpll.apps.googleusercontent.com</string>
-    <string name="facebook_app_id">736372578303490</string>
+    <string name="previous" translatable="false">Previous</string>
+    <string name="default_web_client_id" translatable="false">564004941426-ep1spd3spg751ics429rj9lb51qrjpll.apps.googleusercontent.com</string>
+    <string name="facebook_app_id" translatable="false">736372578303490</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="logout">Tu cuenta</string>
@@ -15,4 +15,41 @@
     <string name="key_logout" translatable="false">logout</string>
     <string name="publicar">Publicar</string>
     <string name="time">Tiempo de preparación</string>
+    <string name="ingrediente">Ingrediente</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="edit">EDITAR PERFIL</string>
+    <string name="guardar">Guardar</string>
+    <string name="buscar">Buscar recetas...</string>
+    <string name="comment">Añade un comentario..</string>
+    <string name="receta_nombre">Nombre</string>
+    <string name="receta_ingredientes">Escribe los ingredientes</string>
+    <string name="receta_pasos">Escribe los pasos</string>
+    <string name="recuerdame">Recuerdame</string>
+    <string name="init_sesion">Iniciar Sesión</string>
+    <string name="cambiarcontraseña">Cambiar contraseña</string>
+    <string name="recetas_perfil">Recetas</string>
+    <string name="editperfil">Editar perfil</string>
+    <string name="guardado">Guardado</string>
+    <string name="recuperar">Recuperar</string>
+    <string name="recuperarcontr">Recupera tu contraseña</string>
+    <string name="crearcuenta">Crea tu cuenta</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="confirmar">Confirmar contraseña</string>
+    <string name="btn_crear_cuenta">Crear cuenta</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="frase">Registrate o crea una cuenta para empezar a compartir tus recetas.</string>
+    <string name="sesion">Iniciar sesión</string>
+    <string name="registrar">Registrar</string>
+    <string name="desayuno">Desayuno</string>
+    <string name="almuerzo">Almuerzo</string>
+    <string name="cena">Cena</string>
+    <string name="postre">Postre</string>
+    <string name="receta">Receta</string>
+    <string name="configuracion">Configuración</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="tipo">Tipo</string>
+    <string name="buscador">Buscador</string>
+    <string name="compras">Listado  de compras</string>
+    <string name="perfiln">Perfil</string>
+    <string name="crearreceta">Crea tu receta</string>
 </resources>

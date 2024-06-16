@@ -45,12 +45,12 @@
     <fragment
         android:id="@+id/createFragment2"
         android:name="com.example.smak.ui.CreateFragment"
-        android:label="Crea tu receta"
+        android:label="@string/crearreceta"
         tools:layout="@layout/fragment_create" />
     <fragment
         android:id="@+id/profileFragment2"
         android:name="com.example.smak.perfil.ProfileFragment"
-        android:label="Perfil"
+        android:label="@string/perfiln"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment2_to_detailFragment"
@@ -59,13 +59,12 @@
     <fragment
         android:id="@+id/comprasFragment2"
         android:name="com.example.smak.compras.ComprasFragment"
-        android:label="Listado  de compras"
+        android:label="@string/compras"
         tools:layout="@layout/fragment_compras" />
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.example.smak.WelcomeFragment"
-        android:label="Bienvenido"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
@@ -81,7 +80,7 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.smak.ui.DetailFragment"
-        android:label="Receta"
+        android:label="@string/receta"
         tools:layout="@layout/fragment_detail" >
         <action
             android:id="@+id/action_detailFragment_to_smakFragment"
@@ -99,7 +98,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.smak.SettingsFragment"
-        android:label="Configuración">
+        android:label="@string/configuracion">
         <action
             android:id="@+id/action_settingsFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment"
@@ -117,11 +116,11 @@
     <fragment
         android:id="@+id/apiDetailFragment"
         android:name="com.example.smak.buscar.ApiDetailFragment"
-        android:label="Receta" />
+        android:label="@string/receta" />
     <fragment
         android:id="@+id/comentariosFragment"
         android:name="com.example.smak.comentarios.ComentariosFragment"
-        android:label="Comentarios" >
+        android:label="@string/comentarios" >
         <action
             android:id="@+id/action_comentariosFragment_to_personaFragment"
             app:destination="@id/personaFragment" />
@@ -132,7 +131,7 @@
     <fragment
         android:id="@+id/tipofragmet"
         android:name="com.example.smak.buscar.TipoFragment"
-        android:label="Tipo"
+        android:label="@string/tipo"
         tools:layout="@layout/fragment_tipo">
         <action
             android:id="@+id/action_tipoFragment_to_buscadorFragment2"
@@ -142,7 +141,7 @@
     <fragment
         android:id="@+id/buscador"
         android:name="com.example.smak.buscar.BuscadorFragment"
-        android:label="Buscador">
+        android:label="@string/buscador">
         <action
             android:id="@+id/action_buscadorFragment2_to_apiDetailFragment"
             app:destination="@id/apiDetailFragment" />
@@ -159,7 +158,7 @@
     <fragment
         android:id="@+id/personaFragment"
         android:name="com.example.smak.comentarios.PersonaFragment"
-        android:label="PersonaFragment" >
+        android:label="" >
         <action
             android:id="@+id/action_personaFragment_to_comentariosFragment"
             app:destination="@id/comentariosFragment" />

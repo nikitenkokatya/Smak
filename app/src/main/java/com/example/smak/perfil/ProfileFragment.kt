@@ -163,8 +163,8 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
         initrvCreadas()
         initrvGuardadas()
 
-        binding.rvcreadas.visibility = View.VISIBLE
-        binding.rvguardadas.visibility = View.GONE
+        binding.rvcreadas.visibility = VISIBLE
+        binding.rvguardadas.visibility = GONE
 
         viewmodel.getMisRecetas(binding.txtcreadas)
         viewmodelfav.cargarRecetasFavoritasSinSuccess(binding.txtguardadas)
@@ -177,7 +177,6 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
         storage = Firebase.storage
 
         perfilViewModel.getPerfil(user!!.email!!, {
-            // onSuccess
             binding.imageView.setImageBitmap(
                 applyCircularMask(
                     base64ToBitmap(PerfilRepository.userPerfil!!.foto!!)
@@ -187,7 +186,6 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
             (activity as AppCompatActivity).supportActionBar?.title = PerfilRepository.userPerfil!!.nombre
 
         }, {
-            // onFailure
             binding.imageView.setImageResource(R.drawable.user)
 
             val userEmail = user.email ?: ""
@@ -322,7 +320,6 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
             )
 
             perfilViewModel.getPerfil(mAuth.currentUser!!.email!!, {
-                // onSuccess
                 binding.imageView.setImageBitmap(
                     applyCircularMask(
                         base64ToBitmap(PerfilRepository.userPerfil!!.foto!!)
@@ -330,7 +327,6 @@ class ProfileFragment : Fragment(), MenuProvider, CreadasAdapter.onClickCreadas,
                 )
                 (activity as AppCompatActivity).supportActionBar?.title = PerfilRepository.userPerfil!!.nombre
             }, {
-                // onFailure
                 binding.imageView.setImageResource(R.drawable.user)
                 val userNameBeforeAt = mAuth.currentUser!!.email!!.substringBefore('@')
                 (activity as AppCompatActivity).supportActionBar?.title  = userNameBeforeAt

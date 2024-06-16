@@ -62,7 +62,7 @@
                     android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nombre">
+                    android:hint="@string/receta_nombre">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tienombre"
@@ -83,7 +83,7 @@
                         android:id="@+id/tieingredientes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Escribe los ingredientes"
+                        android:hint="@string/receta_ingredientes"
                         android:inputType="textMultiLine"
                         android:lines="5"
                         android:textColor="@color/black"
@@ -103,7 +103,7 @@
                         android:id="@+id/tiepasos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Escribe los pasos"
+                        android:hint="@string/receta_pasos"
                         android:inputType="textMultiLine"
                         android:lines="10"
                         android:textColor="@color/black"
@@ -142,8 +142,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:text="@string/publicar" />
-
-
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

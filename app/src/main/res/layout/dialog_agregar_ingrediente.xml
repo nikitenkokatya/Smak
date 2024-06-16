@@ -23,7 +23,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
-            android:hint="Ingrediente"
+            android:hint="@string/ingrediente"
             android:text="@={viewmodel.nombre}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

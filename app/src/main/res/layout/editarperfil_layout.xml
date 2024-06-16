@@ -39,7 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="EDITAR PERFIL"
+                android:text="@string/edit"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -63,8 +63,8 @@
                     android:id="@+id/tieUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:hint="User name" />
+                    android:hint="@string/username"
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -72,7 +72,7 @@
                 android:layout_width="251dp"
                 android:layout_height="43dp"
                 android:layout_marginBottom="32dp"
-                android:text="Guardar"
+                android:text="@string/guardar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

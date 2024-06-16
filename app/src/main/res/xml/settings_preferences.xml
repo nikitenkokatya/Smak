@@ -4,18 +4,8 @@
     <Preference
         android:icon="@drawable/ic_person"
         android:key="@string/key_account"
-        android:summary="@string/summary_account"
+        android:summary=""
         android:title="@string/title_account_setting" />
-
-    <!--<PreferenceCategory android:title="@string/category_notification"
-        android:icon="@drawable/ic_buscar">
-        <SwitchPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:defaultValue="false"
-            android:key="active_notifications"
-            android:title="@string/title_active_notifications" />
-    </PreferenceCategory>-->
 
     <PreferenceCategory android:title="@string/category_misc">
         <ListPreference

@@ -23,4 +23,10 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string-array name="tipo">
+        <item>@string/desayuno</item>
+        <item>@string/almuerzo</item>
+        <item>@string/postre</item>
+        <item>@string/cena</item>
+    </string-array>
 </resources>
