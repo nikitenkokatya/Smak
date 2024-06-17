@@ -64,6 +64,7 @@
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.example.smak.WelcomeFragment"
+        android:label="@string/bienvenido"
         tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_SecondFragment"
