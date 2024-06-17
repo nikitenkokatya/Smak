@@ -13,6 +13,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -47,6 +48,7 @@ class BuscadorFragment : Fragment(), RecetaAdapter.onClick {
         initRV()
 
         val tipo = arguments?.getString("tipo") ?: ""
+        (activity as? AppCompatActivity)?.supportActionBar?.title = tipo
 
         viewmodel.recetas.observe(viewLifecycleOwner, Observer { recetas ->
             recetaAdapter.submitList(recetas)

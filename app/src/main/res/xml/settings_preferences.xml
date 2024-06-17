@@ -9,7 +9,7 @@
 
     <PreferenceCategory android:title="@string/category_misc">
         <ListPreference
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_modo"
             android:key="@string/key_modo"
             android:title="@string/title_modo"
             android:defaultValue="0"
@@ -18,7 +18,7 @@
         </ListPreference>
 
         <ListPreference
-            android:icon="@drawable/ic_enviar"
+            android:icon="@drawable/ic_globo"
             android:key="@string/key_lang"
             android:title="@string/title_lang"
             android:defaultValue="ES"
